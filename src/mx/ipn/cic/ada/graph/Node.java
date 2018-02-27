@@ -22,7 +22,7 @@ public class Node {
     
     public String getData(String key){
         return (String) this.data.get(key);
-    }
+    }  
 
     public int getId() {
         return id;
