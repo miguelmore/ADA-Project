@@ -45,7 +45,8 @@ public class ADAProject {
             }
             
             // Generamos archivo GV
-            String destFile = "/home/komodo/Documents/Cic/Semestre 2/Diseño y Análisis  de Algoritmos/Proyecto 1/archivosGV/testUDG.gv";
+            //String destFile = "/home/komodo/Documents/Cic/Semestre 2/Diseño y Análisis  de Algoritmos/Proyecto 1/archivosGV/testUDG.gv";
+            String destFile = "C:\\Users\\SIA Miguel\\Documents\\Segundo\\Diseño y Análisis de Algoritmos\\Proyecto1\\testUDG.gv";
             udgraph.toGraphviz(destFile);
             
             // Imprimimos grafo
@@ -82,7 +83,8 @@ public class ADAProject {
             }
             
             // Generamos archivo GV
-            String destFile = "/home/komodo/Documents/Cic/Semestre 2/Diseño y Análisis  de Algoritmos/Proyecto 1/archivosGV/testDIG.gv";
+            //String destFile = "/home/komodo/Documents/Cic/Semestre 2/Diseño y Análisis  de Algoritmos/Proyecto 1/archivosGV/testDIG.gv";
+            String destFile = "C:\\Users\\SIA Miguel\\Documents\\Segundo\\Diseño y Análisis de Algoritmos\\Proyecto1\\testDIG.gv";
             digraph.toGraphviz(destFile);
             
             // Imprimimos grafo
@@ -96,8 +98,11 @@ public class ADAProject {
         
         try {
             // Generamos grafos
-            Graph g1 = Graph.createByErdosRenyi(true, true, 5, 9);
+            System.out.println("\n\n-- Grafo Erdos Renyi --");
+            Graph g1 = Graph.createByErdosRenyi(true, true, 500, 2000);
             System.out.println(g1);
+            String destFile = "C:\\Users\\SIA Miguel\\Documents\\Segundo\\Diseño y Análisis de Algoritmos\\Proyecto1\\ErdosRenyi.gv";
+            g1.toGraphviz(destFile);
         } catch (Exception ex) {
             Logger.getLogger(ADAProject.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -9,42 +9,45 @@ package mx.ipn.cic.ada.math;
 public class Counter {
     
     /**
-     * Permutación
+     * Permutación reducida a r constante a 2
      * @param n 
      * @param r
      * @param hasRepetition
      * @return 
      */
-    public static int permutation(int n, int r, boolean hasRepetition){
+    public static long permutation(int n, int r, boolean hasRepetition){
         
-        int per = 0;
+        long per = 0;
         
         if(hasRepetition){
-            per = (int)Math.pow(n,r);
+            per = (long) Math.pow(n,r);
         }
         else{
-            per = (int) fact(n) / fact(n-r);
+            //per = (long) fact(n) / fact(n-r);
+            per = (long) n*(n-1);
         }
                 
         return per;
     }
     
     /**
-     * Combinación
+     * Combinación reducida a r constante a 2
      * @param n
      * @param r
      * @param hasRepetition
      * @return 
      */
-    public static int combination(int n, int r, boolean hasRepetition){
+    public static long combination(int n, int r, boolean hasRepetition){
         
-        int com = 0;
+        long com = 0;
         
         if(hasRepetition){
-            com = (int) fact(n+r-1) / ( fact(r) * fact(n-1));
+            //com = fact(n+r-1) / ( fact(r) * fact(n-1));
+            com = ((n+1)*n) / r;
         }
         else{
-            com = (int) fact(n) / ( fact(r) * fact(n-r));
+            //com = fact(n) / ( fact(r) * fact(n-r));
+            com = (n*(n-1)) / r;
         }
                 
         return com;
@@ -55,8 +58,8 @@ public class Counter {
      * @param n
      * @return 
      */
-    private static int fact(int n){
-        int fact = 1;        
+    private static long fact(int n){
+        long fact = 1;        
         for (int i = 1; i <= n; i++) {
             fact *= i;            
         }        

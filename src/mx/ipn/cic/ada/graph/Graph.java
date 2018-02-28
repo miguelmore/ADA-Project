@@ -4,6 +4,7 @@ package mx.ipn.cic.ada.graph;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 import mx.ipn.cic.ada.math.Counter;
 
 /**
@@ -27,7 +28,38 @@ public abstract class Graph {
         return V.get(randomNum);
     }
     
-    private static int validateInput(boolean isDigraph, boolean hasAutocycle, int n, int m) throws Exception{        
+    private static boolean existsEdge(Edge e, List<Edge> E, boolean isDigraph){
+        boolean exists = true;
+        List result = null;
+        
+        if(isDigraph){
+            result = E.stream()
+                      .filter(edge -> 
+                               edge.getSource().getId().equals(e.getSource().getId())
+                               && edge.getTarget().getId().equals(e.getTarget().getId())
+                      )
+                      .collect(Collectors.toList());   
+            if(result.isEmpty())
+                exists = false;
+        }
+        else{
+            result = E.stream()
+                     .filter(edge -> 
+                            (edge.getSource().getId().equals(e.getSource().getId())
+                            && edge.getTarget().getId().equals(e.getTarget().getId()))
+                            || (edge.getSource().getId().equals(e.getTarget().getId())
+                            && edge.getTarget().getId().equals(e.getSource().getId()))
+                      )
+                      .collect(Collectors.toList());        
+            if(result.isEmpty())
+                exists = false;            
+        }
+        
+        
+        return exists;
+    }
+    
+    private static void validateInput(boolean isDigraph, boolean hasAutocycle, int n, int m) throws Exception{        
         
         // Validamos número de nodos
         if(n<0)
@@ -38,7 +70,7 @@ public abstract class Graph {
             throw new Exception("Número de aristas no puede ser menor a 0");          
                 
         // Calculamos el número maximo de arista
-        int maxEdges = 0;
+        long maxEdges = 0;
         if(isDigraph){            
             if(hasAutocycle){
                 if(n == 0)
@@ -77,17 +109,23 @@ public abstract class Graph {
         }
         
         if(m > maxEdges) 
-            throw new Exception("No pueden haber mas de "+maxEdges+" aristas");
-        
-        return maxEdges;
-    
+            throw new Exception("No pueden haber mas de "+maxEdges+" aristas");        
     }
     
+    /**
+     * Generacion de grafo por metodo Erdos-Renyi
+     * @param isDigraph tipo de grafo
+     * @param hasAutocycle si permite autociclos
+     * @param n numero de nodos
+     * @param m numero de aristas
+     * @return grafo generado
+     * @throws Exception 
+     */
     public static Graph createByErdosRenyi(boolean isDigraph, boolean hasAutocycle, int n, int m) throws Exception{        
         Graph graph = null;
         
         // Validamos los datos de entrada
-        int maxEdges = validateInput(isDigraph,hasAutocycle,n,m);
+        validateInput(isDigraph,hasAutocycle,n,m);
         
         // Construimos grafos
         if(isDigraph)
@@ -99,10 +137,69 @@ public abstract class Graph {
         for(int i=1;i<=n;i++)
             graph.addNode(new Node(String.valueOf(i)));
         
-        // Generamos m cantidad de aristas
+        // Generamos m cantidad de aristas al azar
+        int count = 0;
+        while(count < m){
+            Node n1 = getRandomNode(graph.getV());
+            Node n2 = getRandomNode(graph.getV());
+            Edge e = new Edge(n1, n2);
+            
+            // Validamos autociclo
+            if(n1.getId().equals(n2.getId())){
+                if(!hasAutocycle){
+                    continue;
+                }
+            }
+            
+            // Validamos que no exista la arista
+            if(!existsEdge(e,graph.getE(),isDigraph)){
+                // Agregamos
+                graph.addEdge(e);
+                count++;
+            }
+            else{
+                // Si es digraph, intentamos con arista contraria
+                if(isDigraph){
+                    e = new Edge(e.getTarget(), e.getSource());
+                    if(!existsEdge(e,graph.getE(),isDigraph)){
+                        // Agregamos
+                        graph.addEdge(e);
+                        count++;
+                    }
+                }
+            }  
+        }
         
         
         return graph;       
+    }
+    
+    public static Graph createByGilbert(boolean isDigraph, boolean hasAutocycle, int n, float p) throws Exception{        
+        Graph graph = null;
+        
+        // Validamos los datos de entrada
+        if(p<0 || p>1)
+            throw new Exception("El valor de p debe estar entre 0 y 1");
+        
+        // Construimos grafos
+        if(isDigraph)
+            graph = new DIGraph();
+        else 
+            graph = new UDGraph();
+        
+        // Generamos n cantidad de nodos
+        for(int i=1;i<=n;i++)
+            graph.addNode(new Node(String.valueOf(i)));
+        
+        // Generamos aristas
+        // Por cada par de nodos
+        for (Node n1:graph.getV()) {
+            for (Node n2:graph.getV()) {
+                continue;
+            }
+        }
+        
+        return graph;
     }
     
 
@@ -122,6 +219,12 @@ public abstract class Graph {
     @Override
     public String toString() {
         String g = "Graph{\n" ;
+        
+        boolean isDigraph = true;
+        if(this instanceof UDGraph)
+            isDigraph = false;
+        
+        g+= "\tisDigraph: "+isDigraph+"\n";
         
         g+= "\tV[";
         for (int i=0; i<=this.V.size()-1; i++) {
