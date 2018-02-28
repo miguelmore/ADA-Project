@@ -103,6 +103,12 @@ public class ADAProject {
             System.out.println(g1);
             String destFile = "C:\\Users\\SIA Miguel\\Documents\\Segundo\\Diseño y Análisis de Algoritmos\\Proyecto1\\ErdosRenyi.gv";
             g1.toGraphviz(destFile);
+            
+            System.out.println("\n\n-- Grafo Gilbert --");
+            g1 = Graph.createByGilbert(true, true, 50, 0.2f);
+            System.out.println(g1);
+            destFile = "C:\\Users\\SIA Miguel\\Documents\\Segundo\\Diseño y Análisis de Algoritmos\\Proyecto1\\Gilbert.gv";
+            g1.toGraphviz(destFile);
         } catch (Exception ex) {
             Logger.getLogger(ADAProject.class.getName()).log(Level.SEVERE, null, ex);
         }

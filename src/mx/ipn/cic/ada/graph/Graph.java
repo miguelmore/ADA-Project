@@ -193,10 +193,23 @@ public abstract class Graph {
         
         // Generamos aristas
         // Por cada par de nodos
+        int i=0,j=0;
         for (Node n1:graph.getV()) {
+            j=0;
             for (Node n2:graph.getV()) {
-                continue;
+                System.out.println(i+","+j);
+                float random = (float)Math.random();                
+                // Si gané volado
+                if(random <= p){
+                    Edge e = new Edge(n1, n2);
+                    if(!existsEdge(e,graph.getE(),isDigraph)){
+                        // Agregamos
+                        graph.addEdge(e);
+                    }
+                }
+                j++;
             }
+            i++;
         }
         
         return graph;
