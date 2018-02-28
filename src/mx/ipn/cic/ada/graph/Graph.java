@@ -68,7 +68,7 @@ public abstract class Graph {
      * @return nodo
      * @throws Exception 
      */
-    public abstract Node getNode(int id) throws Exception;;
+    public abstract Node getNode(String id) throws Exception;;
     
     /**
      * Agrega una arista al grafo
@@ -86,6 +86,8 @@ public abstract class Graph {
     
     /**
      * Genera archivo con código Graphviz
+     * @param destFile ruta archivo destino
      */
-    public abstract void toGraphviz(String fileDir);
+    public abstract void toGraphviz(String destFile) throws Exception;
+    
 }

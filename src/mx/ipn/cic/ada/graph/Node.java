@@ -8,10 +8,10 @@ import java.util.HashMap;
  * @author Miguel Moreno
  */
 public class Node {
-    private int id;
+    private String id;
     private HashMap data;
 
-    public Node(int id) {
+    public Node(String id) {
         this.id = id;
         this.data = new HashMap<>();
     }
@@ -24,13 +24,13 @@ public class Node {
         return (String) this.data.get(key);
     }  
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
     @Override
     public String toString() {
-        return "n" + id;
+        return id;
     }
     
     

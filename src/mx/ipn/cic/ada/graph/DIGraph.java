@@ -12,11 +12,11 @@ import java.util.stream.Collectors;
  *
  * @author Miguel Moreno
  */
-public class UDGraph extends Graph {
-
-    public UDGraph() {
+public class DIGraph extends Graph {
+    
+    public DIGraph() {
         super();
-    }  
+    } 
 
     @Override
     public void addNode(Node n) throws Exception {
@@ -34,7 +34,7 @@ public class UDGraph extends Graph {
             throw new Exception(msg);
         }
     }
-    
+
     @Override
     public Node getNode(String id) throws Exception {
         // Buscamos nodo
@@ -56,10 +56,8 @@ public class UDGraph extends Graph {
         // Verificamos que la arista no exista
         List result = this.E.stream()
                       .filter(edge -> 
-                               (edge.getSource().getId().equals(e.getSource().getId())
-                               && edge.getTarget().getId().equals(e.getTarget().getId()))
-                               || (edge.getSource().getId().equals(e.getTarget().getId())
-                               && edge.getTarget().getId().equals(e.getSource().getId()))
+                               edge.getSource().getId().equals(e.getSource().getId())
+                               && edge.getTarget().getId().equals(e.getTarget().getId())
                       )
                       .collect(Collectors.toList());
         
@@ -74,7 +72,7 @@ public class UDGraph extends Graph {
     }
 
     @Override
-    public int getDegree(Node n) {        
+    public int getDegree(Node n) {
         int degree = 0;
         List result = this.E.stream()
                       .filter(edge -> 
@@ -102,12 +100,11 @@ public class UDGraph extends Graph {
     }
 
     @Override
-    public void toGraphviz(String destFile) throws Exception{
-        
+    public void toGraphviz(String destFile) throws Exception {
         // Generamos código gv
-        String body = "graph{\n";
+        String body = "digraph{\n";
         for(Edge e : this.E){
-            body+=e.getSource().getId()+" -- ";
+            body+=e.getSource().getId()+" -> ";
             body+=e.getTarget().getId()+"\n";
         }             
         body+="}";              
@@ -124,7 +121,5 @@ public class UDGraph extends Graph {
             bw.close();
         }
     }
-
     
-
 }
