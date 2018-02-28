@@ -91,6 +91,16 @@ public class ADAProject {
         catch (Exception ex) {
             Logger.getLogger(ADAProject.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
         }
+        
+        
+        
+        try {
+            // Generamos grafos
+            Graph g1 = Graph.createByErdosRenyi(true, true, 5, 9);
+            System.out.println(g1);
+        } catch (Exception ex) {
+            Logger.getLogger(ADAProject.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
 }
