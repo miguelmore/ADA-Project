@@ -106,9 +106,15 @@ public class UDGraph extends Graph {
         
         // Generamos código gv
         StringBuilder sb = new StringBuilder("graph{\n");
+        
+        // Nodos
+        for(Node n: this.V){
+            sb.append(n.getId()+";\n");
+        }        
+        // Aristas
         for(Edge e : this.E){
             sb.append(e.getSource().getId()+" -- ");
-            sb.append(e.getTarget().getId()+"\n");
+            sb.append(e.getTarget().getId()+" ;\n");
         }             
         sb.append("}"); 
        

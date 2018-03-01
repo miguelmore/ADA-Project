@@ -103,10 +103,16 @@ public class DIGraph extends Graph {
     public void toGraphviz(String destFile) throws Exception{
         
         // Generamos código gv
-        StringBuilder sb = new StringBuilder("graph{\n");
+        StringBuilder sb = new StringBuilder("digraph{\n");
+        
+        // Nodos
+        for(Node n: this.V){
+            sb.append(n.getId()+";\n");
+        }        
+        // Aristas
         for(Edge e : this.E){
             sb.append(e.getSource().getId()+" -> ");
-            sb.append(e.getTarget().getId()+"\n");
+            sb.append(e.getTarget().getId()+" ;\n");
         }             
         sb.append("}"); 
        

@@ -99,7 +99,7 @@ public class ADAProject {
         try {
             // Generamos grafos
             System.out.println("\n\n-- Grafo Erdos Renyi --");
-            Graph g1 = Graph.createByErdosRenyi(true, true, 10, 5);
+            Graph g1 = Graph.createByErdosRenyi(true, true, 50, 10);
             System.out.println(g1);
             String destFile = "C:\\Users\\SIA Miguel\\Documents\\Segundo\\Diseño y Análisis de Algoritmos\\Proyecto1\\ErdosRenyi.gv";
             g1.toGraphviz(destFile);
@@ -111,7 +111,7 @@ public class ADAProject {
 //            g1.toGraphviz(destFile);
             
             System.out.println("\n\n-- Grafo Geográfico Simple --");
-            g1 = Graph.createByGeographic(true, true, 100, 0.01f);
+            g1 = Graph.createByGeographic(true, false, 50, 0.2f);
             System.out.println(g1);
             destFile = "C:\\Users\\SIA Miguel\\Documents\\Segundo\\Diseño y Análisis de Algoritmos\\Proyecto1\\Geographic.gv";
             g1.toGraphviz(destFile);

@@ -304,7 +304,8 @@ public abstract class Graph {
     public List<Edge> getE() {
         return E;
     }      
-
+    
+        
     @Override
     public String toString() {
         String g = "Graph{\n" ;
