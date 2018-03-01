@@ -105,18 +105,18 @@ public class UDGraph extends Graph {
     public void toGraphviz(String destFile) throws Exception{
         
         // Generamos código gv
-        String body = "graph{\n";
+        StringBuilder sb = new StringBuilder("graph{\n");
         for(Edge e : this.E){
-            body+=e.getSource().getId()+" -- ";
-            body+=e.getTarget().getId()+"\n";
+            sb.append(e.getSource().getId()+" -- ");
+            sb.append(e.getTarget().getId()+"\n");
         }             
-        body+="}";              
+        sb.append("}"); 
        
         File file = new File(destFile);
         BufferedWriter bw = null;
         try {
             bw = new BufferedWriter(new FileWriter(file));
-            bw.write(body);
+            bw.write(sb.toString());
         } catch (IOException ex) {
             throw new Exception("No se pudo crear el archivo GV");
         }

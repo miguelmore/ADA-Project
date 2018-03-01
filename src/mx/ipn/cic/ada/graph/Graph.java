@@ -215,6 +215,82 @@ public abstract class Graph {
         return graph;
     }
     
+    public static Graph createByGeographic(boolean isDigraph, boolean hasAutocycle, int n, float r) throws Exception{
+        Graph graph = null;
+        
+        // Validamos los datos de entrada
+        if(r<0)
+            throw new Exception("La sitancia r debe ser mayor a 0");
+        
+        // Construimos grafos
+        if(isDigraph)
+            graph = new DIGraph();
+        else 
+            graph = new UDGraph();        
+        
+        // Clase local para agregar coordenadas al nodo
+        class NodeGeo extends Node{
+            float x; // Coordenada x
+            float y; // Coordenada y  
+            NodeGeo(String id) {
+                super(id);
+            }                       
+            float calcDistance(NodeGeo ng){
+                float dist = (float) Math.pow((ng.x - this.x),2);
+                dist += (float) Math.pow((ng.y - this.y),2);
+                dist = (float) Math.sqrt(dist); 
+                //System.out.println("dist "+dist);                
+                if(dist>=1.39){
+                    System.out.println("dist "+dist); 
+                    System.out.println(this);
+                    System.out.println(ng);
+                }               
+                return dist;
+            }
+            @Override
+            public String toString() {
+                return "NodeGeo{" + "x=" + x + ", y=" + y + '}';
+            }            
+        }
+        
+        // Generamos n cantidad de nodos
+        for(int i=1;i<=n;i++){
+            NodeGeo ng = new NodeGeo(String.valueOf(i));
+            ng.x = (float) Math.random();
+            ng.y = (float) Math.random();            
+            graph.addNode(ng);
+            //System.out.println(ng.x+","+ng.y);
+        }
+        
+        // Buscamos nodos cercanos para crear arista
+        for(int i=0; i<graph.getV().size(); i++){
+            NodeGeo ni = (NodeGeo) graph.getV().get(i);
+            for(int j=0; j<graph.getV().size(); j++){
+                NodeGeo nj = (NodeGeo) graph.getV().get(j);
+                // Si es mismo nodo validamos autociclo
+                if(ni.getId().equals(nj.getId())){
+                    if(hasAutocycle){                            
+                        Edge e = new Edge(ni, nj);
+                        graph.addEdge(e);                           
+                    }
+                    else{
+                        continue;
+                    }
+                }
+                else{
+                    // Si distancia cumple, se crea arista
+                    if(ni.calcDistance(nj) <= r){                            
+                        Edge e = new Edge(ni, nj); 
+                        if(!existsEdge(e,graph.getE(),isDigraph))
+                            graph.addEdge(e);
+                    }
+                }
+            }
+        }
+        
+        return graph;
+    }
+    
 
     protected Graph() {
         this.V = new ArrayList<Node>();
