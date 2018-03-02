@@ -197,7 +197,6 @@ public abstract class Graph {
         for (Node n1:graph.getV()) {
             j=0;
             for (Node n2:graph.getV()) {
-                System.out.println(i+","+j);
                 float random = (float)Math.random();                
                 // Si gané volado
                 if(random <= p){
@@ -238,13 +237,7 @@ public abstract class Graph {
             float calcDistance(NodeGeo ng){
                 float dist = (float) Math.pow((ng.x - this.x),2);
                 dist += (float) Math.pow((ng.y - this.y),2);
-                dist = (float) Math.sqrt(dist); 
-                //System.out.println("dist "+dist);                
-                if(dist>=1.39){
-                    System.out.println("dist "+dist); 
-                    System.out.println(this);
-                    System.out.println(ng);
-                }               
+                dist = (float) Math.sqrt(dist);                              
                 return dist;
             }
             @Override

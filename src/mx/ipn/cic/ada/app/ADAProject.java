@@ -47,7 +47,7 @@ public class ADAProject {
             // Generamos archivo GV
             //String destFile = "/home/komodo/Documents/Cic/Semestre 2/Diseño y Análisis  de Algoritmos/Proyecto 1/archivosGV/testUDG.gv";
             String destFile = "C:\\Users\\SIA Miguel\\Documents\\Segundo\\Diseño y Análisis de Algoritmos\\Proyecto1\\testUDG.gv";
-            udgraph.toGraphviz(destFile);
+            //udgraph.toGraphviz(destFile);
             
             // Imprimimos grafo
             System.out.println(udgraph);
@@ -85,7 +85,7 @@ public class ADAProject {
             // Generamos archivo GV
             //String destFile = "/home/komodo/Documents/Cic/Semestre 2/Diseño y Análisis  de Algoritmos/Proyecto 1/archivosGV/testDIG.gv";
             String destFile = "C:\\Users\\SIA Miguel\\Documents\\Segundo\\Diseño y Análisis de Algoritmos\\Proyecto1\\testDIG.gv";
-            digraph.toGraphviz(destFile);
+            //digraph.toGraphviz(destFile);
             
             // Imprimimos grafo
             System.out.println(digraph);
@@ -99,19 +99,19 @@ public class ADAProject {
         try {
             // Generamos grafos
             System.out.println("\n\n-- Grafo Erdos Renyi --");
-            Graph g1 = Graph.createByErdosRenyi(true, true, 50, 10);
+            Graph g1 = Graph.createByErdosRenyi(false, true, 500, 100);
             System.out.println(g1);
             String destFile = "C:\\Users\\SIA Miguel\\Documents\\Segundo\\Diseño y Análisis de Algoritmos\\Proyecto1\\ErdosRenyi.gv";
             g1.toGraphviz(destFile);
             
-//            System.out.println("\n\n-- Grafo Gilbert --");
-//            g1 = Graph.createByGilbert(true, true, 10, 0.2f);
-//            System.out.println(g1);
-//            destFile = "C:\\Users\\SIA Miguel\\Documents\\Segundo\\Diseño y Análisis de Algoritmos\\Proyecto1\\Gilbert.gv";
-//            g1.toGraphviz(destFile);
+            System.out.println("\n\n-- Grafo Gilbert --");
+            g1 = Graph.createByGilbert(true, true, 500, 0.1f);
+            System.out.println(g1);
+            destFile = "C:\\Users\\SIA Miguel\\Documents\\Segundo\\Diseño y Análisis de Algoritmos\\Proyecto1\\Gilbert.gv";
+            g1.toGraphviz(destFile);
             
             System.out.println("\n\n-- Grafo Geográfico Simple --");
-            g1 = Graph.createByGeographic(true, false, 50, 0.2f);
+            g1 = Graph.createByGeographic(true, false, 500, 0.1f);
             System.out.println(g1);
             destFile = "C:\\Users\\SIA Miguel\\Documents\\Segundo\\Diseño y Análisis de Algoritmos\\Proyecto1\\Geographic.gv";
             g1.toGraphviz(destFile);
