@@ -174,6 +174,15 @@ public abstract class Graph {
         return graph;       
     }
     
+    /**
+     * Generacion de grafo por metodo Gilbert
+     * @param isDigraph tipo de grafo
+     * @param hasAutocycle si permite autociclos
+     * @param n numero de nodos
+     * @param p probabilida de tener arista
+     * @return grafo generado
+     * @throws Exception 
+     */
     public static Graph createByGilbert(boolean isDigraph, boolean hasAutocycle, int n, float p) throws Exception{        
         Graph graph = null;
         
@@ -214,12 +223,21 @@ public abstract class Graph {
         return graph;
     }
     
+    /**
+     * Generacion de grafo por metodo Geográfico
+     * @param isDigraph tipo de grafo
+     * @param hasAutocycle si permite autociclos
+     * @param n numero de nodos
+     * @param r distancia maxima del nodo vecino
+     * @return grafo generado
+     * @throws Exception 
+     */
     public static Graph createByGeographic(boolean isDigraph, boolean hasAutocycle, int n, float r) throws Exception{
         Graph graph = null;
         
         // Validamos los datos de entrada
-        if(r<0)
-            throw new Exception("La sitancia r debe ser mayor a 0");
+        if(r<=0)
+            throw new Exception("La distancia r debe ser mayor a 0");
         
         // Construimos grafos
         if(isDigraph)
@@ -252,7 +270,7 @@ public abstract class Graph {
             ng.x = (float) Math.random();
             ng.y = (float) Math.random();            
             graph.addNode(ng);
-            //System.out.println(ng.x+","+ng.y);
+            //System.out.println(ng);
         }
         
         // Buscamos nodos cercanos para crear arista
@@ -284,7 +302,63 @@ public abstract class Graph {
         return graph;
     }
     
-
+    /**
+     * Generacion de grafo por metodo Barabasi Albert
+     * @param isDigraph tipo de grafo
+     * @param n numero de nodos
+     * @param d numero máximo de aristas por nodo
+     * @return grafo generado
+     * @throws Exception 
+     */
+    public static Graph createByBarabasiAlbert(boolean isDigraph, int n, int d) throws Exception{
+        Graph graph = null;
+        
+        // Validamos los datos de entrada
+        if(d<=0)
+            throw new Exception("El número de aristas d debe ser mayor a 0");
+        
+        // Construimos grafo
+        if(isDigraph)
+            graph = new DIGraph();
+        else 
+            graph = new UDGraph();  
+        
+        // Generamos n cantidad de nodos
+        for(int i=1;i<=n;i++){
+            Node newNode = new Node(String.valueOf(i));
+            
+            //si es el primer nodo, solo se agrega
+            if(i==1){
+                graph.addNode(newNode);
+            }
+            else{
+                // Por cada nodo en V vaidamos si
+                // se genera una arista de newNode a cada V
+                int degV = 0;
+                float p = 0;
+                float random = 0f;
+                for(Node vNode : graph.getV()){
+                    degV = graph.getDegree(vNode);
+                    p = 1 - (degV / d);
+                    random = (float)Math.random();   
+                    
+                    // Si la probabilidad se cumple agregamos arista
+                    if(random <= p){
+                       graph.addEdge(new Edge(newNode, vNode));
+                       //System.out.println("Arista de "+newNode.getId()+" a "+vNode.getId());
+                    }                    
+                }
+                
+                // Una vez evaluado contra todos los nodos V, se agrega
+                graph.addNode(newNode);
+            }
+            
+        }
+        
+        
+        return graph;
+    }
+   
     protected Graph() {
         this.V = new ArrayList<Node>();
         this.E = new ArrayList<Edge>();
