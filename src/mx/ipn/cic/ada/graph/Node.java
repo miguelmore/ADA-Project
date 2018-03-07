@@ -16,12 +16,16 @@ public class Node {
         this.data = new HashMap<>();
     }
     
-    public void addData(String key, String value){
+    public void addData(String key, Object value){
         this.data.put(key, value);
     }
     
-    public String getData(String key){
-        return (String) this.data.get(key);
+    public void replaceData(String key, Object value){
+        this.data.put(key, value);
+    }
+    
+    public Object getData(String key){
+        return  this.data.get(key);
     }  
 
     public String getId() {

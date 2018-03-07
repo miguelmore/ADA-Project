@@ -4,6 +4,7 @@ package mx.ipn.cic.ada.search;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import mx.ipn.cic.ada.graph.DIGraph;
 import mx.ipn.cic.ada.graph.Edge;
 import mx.ipn.cic.ada.graph.Graph;
 import mx.ipn.cic.ada.graph.Node;
@@ -15,11 +16,29 @@ import mx.ipn.cic.ada.graph.UDGraph;
  */
 public class Search {      
     
+    
+    
+    
+    /**
+     * Breadth First Search
+     * @param graph grafo original
+     * @param s nodo fuente
+     * @return
+     * @throws Exception 
+     */
     public static Graph BFS(Graph graph, Node s) throws Exception{
         Graph bfsTree = new UDGraph();
+               
+        // Por cada nodo agregamos una bandera 
+        // para saber si ya fue agregado a una capa
+        final String DIS = "discovered";
+        graph.getV().forEach((n) -> {
+            n.addData(DIS, false);
+        });
         
-        // agregamos nodo raiz al arbol BFS
-        bfsTree.addNode(s);
+        // Marcamos el nodo raiz y agregamos al arbol
+        s.replaceData(DIS, true);
+        bfsTree.getV().add(s);   
         
         // Creacion árbol BFS
         class Layer{
@@ -32,37 +51,47 @@ public class Search {
         int i = 0;   
         
         // Creamos Layer 0 con nodo S
-        Layer layer = new Layer();
-        layer.nodes.add(s);
-        layers.add(layer);
+        layers.add(new Layer());
+        layers.get(i).nodes.add(s);        
         
-        // Mientras el arbol BFS tenga menos nodos que el grafo
-        while(bfsTree.getV().size() < graph.getV().size()){
+        // Mientras no se llegue a una capa sin nodos
+        while(!layers.get(i).nodes.isEmpty()){
+            
+            // Si la capa i+1 no existe, se crea
+            if(i+1 >= layers.size())
+                layers.add(new Layer());
             
             // Por cada nodo de la capa i
             for(Node n: layers.get(i).nodes){
                 
                 // Obtenemos arista origen n
-                List<Edge> edges = Graph.getEdgesFromS(n, graph.getE());
+                List<Edge> edges = Graph.getEdgesBySource(n, graph.getE(), graph.isDigraph());
                 
                 // Por cada arista, agregamos nodo target a nueva capa
-                layer = new Layer();
-                layers.add(layer);
                 for (Edge e : edges) {
-                    Node target = e.getTarget();
-                    // Si el nodo no existe en BFS, se agrega
-                    if(!Graph.existsNode(target, bfsTree.getV())){
-                        layer.nodes.add(target);
+                    Node target = null;
+                    
+                    if(graph.isDigraph()){
+                        target = e.getTarget();
+                    }
+                    else{
+                        if(e.getSource().getId().equals(n.getId()))
+                            target = e.getTarget();
+                        else
+                            target = e.getSource();
+                    }
+                    
+                    // Si el nodo no ha sido marcado
+                    if(!(boolean)target.getData(DIS)){
+                        target.replaceData(DIS, true);
+                        layers.get(i+1).nodes.add(target);
                         bfsTree.getV().add(target);                                                
                         bfsTree.addEdge(e);
-//                        System.out.println("Agrego nodo "+target);
-//                        System.out.println("Agrego arista "+e);
                     }
                 }
             }           
-            i++;
-        }
-        
+            i++; // contador de capa
+        }        
         return bfsTree;
     }
 }

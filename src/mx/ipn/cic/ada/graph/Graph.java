@@ -362,29 +362,29 @@ public abstract class Graph {
     }
     
     /**
-     * Obtiene aristas con origen en nodo s
+     * Obtiene aristas con origen en s, varía si es dirigido o no
      * @param s Nodo origen
      * @param E Conjunto de Aristas
      * @return 
      */
-    public static List<Edge> getEdgesFromS(Node s, List<Edge> E){
-        List<Edge> result = E.stream().filter(e -> e.getSource().getId().equals(s.getId()))
-                            .collect(Collectors.toList());                
+    public static List<Edge> getEdgesBySource(Node s, List<Edge> E, boolean isDigraph){
+        List<Edge> result = null;
+        
+        if(isDigraph){
+            result = E.stream().filter(e -> 
+                                       e.getSource().getId().equals(s.getId()))
+                     .collect(Collectors.toList());    
+        }
+        else{
+            result = E.stream().filter(e -> 
+                                       e.getSource().getId().equals(s.getId())
+                                       || e.getTarget().getId().equals(s.getId()))
+                     .collect(Collectors.toList());  
+        }      
+                
         return result;
     }
     
-    public static boolean existsNode(Node n, List<Node> V){
-        boolean exists = true;
-        List result = null;
-        
-        result = V.stream().filter(node -> node.getId().equals(n.getId()))
-                 .collect(Collectors.toList());
-        
-        if(result.isEmpty())
-            exists = false;       
-        return exists;
-    }
-   
     protected Graph() {
         this.V = new ArrayList<Node>();
         this.E = new ArrayList<Edge>();
@@ -398,14 +398,18 @@ public abstract class Graph {
         return E;
     }      
     
+    public boolean isDigraph(){
+        return this instanceof DIGraph;
+    }
+    
         
     @Override
     public String toString() {
         String g = "Graph{\n" ;
         
-        boolean isDigraph = true;
-        if(this instanceof UDGraph)
-            isDigraph = false;
+        boolean isDigraph = false;
+        if(this.isDigraph())
+            isDigraph = true;
         
         g+= "\tisDigraph: "+isDigraph+"\n";
         

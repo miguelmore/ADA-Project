@@ -27,6 +27,17 @@ public class ADAProject {
         String URL_BASE = "C:\\Users\\SIA Miguel\\Documents\\Segundo\\Diseño y Análisis de Algoritmos\\Proyecto1\\";
         //String URL_BASE = "/home/komodo/Documents/Cic/Semestre 2/Diseño y Análisis  de Algoritmos//Proyecto 1/archivosGV/";
         
+        // Pruebas del Proyecto 1
+        //proyecto1(URL_BASE);
+                
+        // Pruebas del Proyecto 2
+        URL_BASE = "C:\\Users\\SIA Miguel\\Documents\\Segundo\\Diseño y Análisis de Algoritmos\\Proyecto2\\";
+        proyecto2(URL_BASE);
+        
+    }
+    
+
+    public static void proyecto1(final String URL_BASE){
         /* PROYECTO 1 */
         try {
             int numNodos = 30;            
@@ -59,11 +70,13 @@ public class ADAProject {
         } catch (Exception ex) {
             Logger.getLogger(ADAProject.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
+    }
+    
+    
+    public static void proyecto2(final String URL_BASE){
         /* PROYECTO 2 */
-        URL_BASE = "C:\\Users\\SIA Miguel\\Documents\\Segundo\\Diseño y Análisis de Algoritmos\\Proyecto2\\";
         try{
+            // Creamos el grafo de ejemplo revisado en clase
             Graph g2 = new UDGraph();
             List<Node> nodes = g2.getV();
             for (int i=1; i<=8; i++) {
@@ -83,17 +96,32 @@ public class ADAProject {
             
             System.out.println("\n\n-- Grafo para BFS --");
             System.out.println(g2);            
-            g2.toGraphviz(URL_BASE + "BFS-Original.gv");  
+            g2.toGraphviz(URL_BASE + "BFS-Original-Ejemplo.gv");  
             
             Graph bfsTree = Search.BFS(g2, nodes.get(0));            
             System.out.println("\n\n-- Arbol BFS --");
             System.out.println(bfsTree);            
-            bfsTree.toGraphviz(URL_BASE + "BFS-Tree.gv");  
+            bfsTree.toGraphviz(URL_BASE + "BFS-Tree-Ejemplo.gv");  
             
         } catch (Exception ex) {
             Logger.getLogger(ADAProject.class.getName()).log(Level.SEVERE, null, ex);
         }
         
+        try{
+            // Creamos el grafo aleatorio
+            Graph g = Graph.createByErdosRenyi(false, false, 10, 10);  
+            System.out.println("\n\n-- Grafo para BFS --");
+            System.out.println(g);            
+            g.toGraphviz(URL_BASE + "BFS-Original-Aleatorio.gv");  
+            
+            Graph bfsTree = Search.BFS(g, g.getV().get(0));            
+            System.out.println("\n\n-- Arbol BFS --");
+            System.out.println(bfsTree);            
+            bfsTree.toGraphviz(URL_BASE + "BFS-Tree-Aleatorio.gv");  
+            
+        } catch (Exception ex) {
+            Logger.getLogger(ADAProject.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
-    
+
 }
