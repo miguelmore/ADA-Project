@@ -27,6 +27,8 @@ public abstract class Graph {
         int randomNum = new Random().nextInt((max - min) + 1) + min; 
         return V.get(randomNum);
     }
+            
+    
     
     private static boolean existsEdge(Edge e, List<Edge> E, boolean isDigraph){
         boolean exists = true;
@@ -357,6 +359,30 @@ public abstract class Graph {
         
         
         return graph;
+    }
+    
+    /**
+     * Obtiene aristas con origen en nodo s
+     * @param s Nodo origen
+     * @param E Conjunto de Aristas
+     * @return 
+     */
+    public static List<Edge> getEdgesFromS(Node s, List<Edge> E){
+        List<Edge> result = E.stream().filter(e -> e.getSource().getId().equals(s.getId()))
+                            .collect(Collectors.toList());                
+        return result;
+    }
+    
+    public static boolean existsNode(Node n, List<Node> V){
+        boolean exists = true;
+        List result = null;
+        
+        result = V.stream().filter(node -> node.getId().equals(n.getId()))
+                 .collect(Collectors.toList());
+        
+        if(result.isEmpty())
+            exists = false;       
+        return exists;
     }
    
     protected Graph() {

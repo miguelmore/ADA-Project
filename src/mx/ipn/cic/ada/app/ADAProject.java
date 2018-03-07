@@ -1,13 +1,15 @@
 
 package mx.ipn.cic.ada.app;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import mx.ipn.cic.ada.graph.DIGraph;
 import mx.ipn.cic.ada.graph.Edge;
 import mx.ipn.cic.ada.graph.Graph;
 import mx.ipn.cic.ada.graph.Node;
 import mx.ipn.cic.ada.graph.UDGraph;
+import mx.ipn.cic.ada.search.Search;
 
 /**
  *
@@ -20,12 +22,14 @@ public class ADAProject {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-                       
+         
+        
+        String URL_BASE = "C:\\Users\\SIA Miguel\\Documents\\Segundo\\Diseño y Análisis de Algoritmos\\Proyecto1\\";
+        //String URL_BASE = "/home/komodo/Documents/Cic/Semestre 2/Diseño y Análisis  de Algoritmos//Proyecto 1/archivosGV/";
+        
+        /* PROYECTO 1 */
         try {
-            int numNodos = 500;
-            //final String URL_BASE = "C:\\Users\\SIA Miguel\\Documents\\Segundo\\Diseño y Análisis de Algoritmos\\Proyecto1\\";
-            final String URL_BASE = "/home/komodo/Documents/Cic/Semestre 2/Diseño y Análisis  de Algoritmos//Proyecto 1/archivosGV/";
-            
+            int numNodos = 30;            
             // Generamos grafos
             System.out.println("\n\n-- Grafo Erdos Renyi --");
             Graph g1 = Graph.createByErdosRenyi(false, true, numNodos, numNodos/2);
@@ -55,6 +59,41 @@ public class ADAProject {
         } catch (Exception ex) {
             Logger.getLogger(ADAProject.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        
+        /* PROYECTO 2 */
+        URL_BASE = "C:\\Users\\SIA Miguel\\Documents\\Segundo\\Diseño y Análisis de Algoritmos\\Proyecto2\\";
+        try{
+            Graph g2 = new UDGraph();
+            List<Node> nodes = g2.getV();
+            for (int i=1; i<=8; i++) {
+                nodes.add(new Node(String.valueOf(i)));
+            }
+            g2.getE().add(new Edge(nodes.get(1-1), nodes.get(2-1)));
+            g2.getE().add(new Edge(nodes.get(1-1), nodes.get(3-1)));
+            g2.getE().add(new Edge(nodes.get(2-1), nodes.get(3-1)));
+            g2.getE().add(new Edge(nodes.get(2-1), nodes.get(5-1)));
+            g2.getE().add(new Edge(nodes.get(2-1), nodes.get(4-1)));
+            g2.getE().add(new Edge(nodes.get(3-1), nodes.get(5-1)));
+            g2.getE().add(new Edge(nodes.get(3-1), nodes.get(7-1)));
+            g2.getE().add(new Edge(nodes.get(3-1), nodes.get(8-1)));
+            g2.getE().add(new Edge(nodes.get(4-1), nodes.get(5-1)));
+            g2.getE().add(new Edge(nodes.get(5-1), nodes.get(6-1)));
+            g2.getE().add(new Edge(nodes.get(7-1), nodes.get(8-1)));
+            
+            System.out.println("\n\n-- Grafo para BFS --");
+            System.out.println(g2);            
+            g2.toGraphviz(URL_BASE + "BFS-Original.gv");  
+            
+            Graph bfsTree = Search.BFS(g2, nodes.get(0));            
+            System.out.println("\n\n-- Arbol BFS --");
+            System.out.println(bfsTree);            
+            bfsTree.toGraphviz(URL_BASE + "BFS-Tree.gv");  
+            
+        } catch (Exception ex) {
+            Logger.getLogger(ADAProject.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
     
 }
