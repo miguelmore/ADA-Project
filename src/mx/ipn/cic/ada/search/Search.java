@@ -94,4 +94,57 @@ public class Search {
         }        
         return bfsTree;
     }
+    
+    public static Graph DFS(Graph graph, Node s) throws Exception{
+        Graph dfsTree = new UDGraph();
+               
+        // Por cada nodo agregamos una bandera 
+        // para saber si ya fue explorado
+        final String EXP = "explored";
+        graph.getV().forEach((n) -> {
+            n.addData(EXP, false);
+        });
+        
+        // Marcamos el nodo raiz y agregamos al arbol
+        s.replaceData(EXP, true);
+        dfsTree.getV().add(s);
+        
+        // Mandamos a la funcion recursiva que genera el arbol DFS
+        Search.recursionDFS(graph, s, dfsTree);
+        
+        
+        return dfsTree;
+    }
+    
+    private static void recursionDFS(Graph graph, Node s, Graph dfsTree) throws Exception{
+        final String EXP = "explored";
+        
+        // Obtenemos arista origen n
+        List<Edge> edges = Graph.getEdgesBySource(s, graph.getE(), graph.isDigraph());
+
+        // Por cada arista del nodo s
+        for (Edge e : edges) {
+            Node target = null;
+
+            if(graph.isDigraph()){
+                target = e.getTarget();
+            }
+            else{
+                if(e.getSource().getId().equals(s.getId()))
+                    target = e.getTarget();
+                else
+                    target = e.getSource();
+            }
+
+            // Si el nodo no ha sido explorado
+            if(!(boolean)target.getData(EXP)){
+                target.replaceData(EXP, true); 
+                //System.out.println("Marco nodo y mando a recursion "+target);
+                dfsTree.getV().add(target);                                                
+                dfsTree.addEdge(e);
+                //Llamado recursivo
+                recursionDFS(graph, target, dfsTree);
+            }
+        }
+    }
 }

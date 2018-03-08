@@ -28,11 +28,11 @@ public class ADAProject {
         //String URL_BASE = "/home/komodo/Documents/Cic/Semestre 2/Diseño y Análisis  de Algoritmos//Proyecto 1/archivosGV/";
         
         // Pruebas del Proyecto 1
-        //proyecto1(URL_BASE);
+        proyecto1(URL_BASE);
                 
         // Pruebas del Proyecto 2
-        URL_BASE = "C:\\Users\\SIA Miguel\\Documents\\Segundo\\Diseño y Análisis de Algoritmos\\Proyecto2\\";
-        proyecto2(URL_BASE);
+        //URL_BASE = "C:\\Users\\SIA Miguel\\Documents\\Segundo\\Diseño y Análisis de Algoritmos\\Proyecto2\\";
+        //proyecto2(URL_BASE);
         
     }
     
@@ -96,12 +96,17 @@ public class ADAProject {
             
             System.out.println("\n\n-- Grafo para BFS --");
             System.out.println(g2);            
-            g2.toGraphviz(URL_BASE + "BFS-Original-Ejemplo.gv");  
+            g2.toGraphviz(URL_BASE + "Original-Ejemplo.gv");  
             
             Graph bfsTree = Search.BFS(g2, nodes.get(0));            
             System.out.println("\n\n-- Arbol BFS --");
             System.out.println(bfsTree);            
             bfsTree.toGraphviz(URL_BASE + "BFS-Tree-Ejemplo.gv");  
+            
+            Graph dfsTree = Search.DFS(g2, nodes.get(0));            
+            System.out.println("\n\n-- Arbol DFS --");
+            System.out.println(dfsTree);            
+            dfsTree.toGraphviz(URL_BASE + "DFS-Tree-Ejemplo.gv");
             
         } catch (Exception ex) {
             Logger.getLogger(ADAProject.class.getName()).log(Level.SEVERE, null, ex);
@@ -112,12 +117,17 @@ public class ADAProject {
             Graph g = Graph.createByErdosRenyi(false, false, 10, 10);  
             System.out.println("\n\n-- Grafo para BFS --");
             System.out.println(g);            
-            g.toGraphviz(URL_BASE + "BFS-Original-Aleatorio.gv");  
+            g.toGraphviz(URL_BASE + "Original-Aleatorio.gv");  
             
             Graph bfsTree = Search.BFS(g, g.getV().get(0));            
             System.out.println("\n\n-- Arbol BFS --");
             System.out.println(bfsTree);            
             bfsTree.toGraphviz(URL_BASE + "BFS-Tree-Aleatorio.gv");  
+            
+            Graph dfsTree = Search.DFS(g, g.getV().get(0));            
+            System.out.println("\n\n-- Arbol DFS --");
+            System.out.println(dfsTree);            
+            dfsTree.toGraphviz(URL_BASE + "DFS-Tree-Aleatorio.gv");
             
         } catch (Exception ex) {
             Logger.getLogger(ADAProject.class.getName()).log(Level.SEVERE, null, ex);
