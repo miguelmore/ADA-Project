@@ -3,6 +3,7 @@ package mx.ipn.cic.ada.search;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 import java.util.stream.Collectors;
 import mx.ipn.cic.ada.graph.DIGraph;
 import mx.ipn.cic.ada.graph.Edge;
@@ -95,7 +96,7 @@ public class Search {
         return bfsTree;
     }
     
-    public static Graph DFS(Graph graph, Node s) throws Exception{
+    public static Graph DFS_R(Graph graph, Node s) throws Exception{
         Graph dfsTree = new UDGraph();
                
         // Por cada nodo agregamos una bandera 
@@ -147,4 +148,86 @@ public class Search {
             }
         }
     }
+
+    
+    public static Graph DFS_I(Graph graph, Node s) throws Exception{
+        Graph dfsTree = new UDGraph();
+               
+        // Por cada nodo agregamos una bandera 
+        // para saber si ya fue explorado
+        final String EXP = "explored";
+        graph.getV().forEach((n) -> {
+            n.addData(EXP, false);
+        });
+                   
+        // Clase para guardar arista relacionada al nodo por explorar
+        class NodeEdge{
+            Node node;
+            Edge edge;
+
+            public NodeEdge(Node node, Edge edge) {
+                this.node = node;
+                this.edge = edge;
+            }
+        }
+        
+        // Pila en donde almacenaremos los nodos por explorar
+        Stack<NodeEdge> stack = new Stack<>();
+        NodeEdge node_edge = null;
+        
+        // Se comienza por explorar el nodo raiz
+        node_edge = new NodeEdge(s,null);
+        stack.push(node_edge);
+        
+        // Marcamos el nodo raiz y agregamos al arbol
+        s.replaceData(EXP, true);
+        dfsTree.getV().add(s);
+        
+        List<Edge> edges = null;
+        
+        // Mientras la pila no este vacia
+        while(!stack.isEmpty()){
+            // Sacamos un nodo de la pila para procesar
+            // y marcamos como explorado
+            node_edge = stack.pop();
+            s = node_edge.node;
+            
+            if(!(boolean)s.getData(EXP))
+            {
+                // Se agrega nodo y arista al arbol
+                // y se marca el nodo
+                dfsTree.getV().add(s);
+                dfsTree.getE().add(node_edge.edge);
+                s.replaceData(EXP, true);
+            }
+            
+            // Obtenemos arista origen en s
+            edges = Graph.getEdgesBySource(s, graph.getE(), graph.isDigraph());
+            
+            // Por cada arista, buscamos su nodo target
+            Node target = null;
+            for (Edge e : edges) {               
+
+                if(graph.isDigraph()){
+                    target = e.getTarget();
+                }
+                else{
+                    if(e.getSource().getId().equals(s.getId()))
+                        target = e.getTarget();
+                    else
+                        target = e.getSource();
+                }
+                
+                // Si no ha sido explorado, se agrega a pila por explorar
+                if(!(boolean)target.getData(EXP))
+                {
+                    stack.push(new NodeEdge(target,e));
+                }
+            }
+            
+        }        
+        
+        return dfsTree;
+    }
+
 }
