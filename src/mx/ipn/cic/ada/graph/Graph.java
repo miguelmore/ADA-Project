@@ -211,6 +211,12 @@ public abstract class Graph {
                 float random = (float)Math.random();                
                 // Si gané volado
                 if(random <= p){
+                    
+                    // Si no permite autociclo, omitimos
+                    if(!hasAutocycle)
+                        if(n1.getId().equals(n2.getId()))
+                            continue;
+                    
                     Edge e = new Edge(n1, n2);
                     if(!existsEdge(e,graph.getE(),isDigraph)){
                         // Agregamos

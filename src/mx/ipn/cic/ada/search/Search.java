@@ -4,8 +4,6 @@ package mx.ipn.cic.ada.search;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
-import java.util.stream.Collectors;
-import mx.ipn.cic.ada.graph.DIGraph;
 import mx.ipn.cic.ada.graph.Edge;
 import mx.ipn.cic.ada.graph.Graph;
 import mx.ipn.cic.ada.graph.Node;
@@ -96,6 +94,13 @@ public class Search {
         return bfsTree;
     }
     
+    /**
+     * Deep First Search - Recursive
+     * @param graph
+     * @param s
+     * @return
+     * @throws Exception 
+     */
     public static Graph DFS_R(Graph graph, Node s) throws Exception{
         Graph dfsTree = new UDGraph();
                
@@ -149,7 +154,13 @@ public class Search {
         }
     }
 
-    
+    /**
+     * Deep First Search - Iterative
+     * @param graph
+     * @param s
+     * @return
+     * @throws Exception 
+     */
     public static Graph DFS_I(Graph graph, Node s) throws Exception{
         Graph dfsTree = new UDGraph();
                

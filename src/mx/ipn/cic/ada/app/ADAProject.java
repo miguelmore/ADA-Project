@@ -1,14 +1,9 @@
 
 package mx.ipn.cic.ada.app;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import mx.ipn.cic.ada.graph.Edge;
 import mx.ipn.cic.ada.graph.Graph;
-import mx.ipn.cic.ada.graph.Node;
-import mx.ipn.cic.ada.graph.UDGraph;
 import mx.ipn.cic.ada.search.Search;
 
 /**
@@ -31,8 +26,8 @@ public class ADAProject {
         //proyecto1(URL_BASE);
                 
         // Pruebas del Proyecto 2
-        //URL_BASE = "C:\\Users\\SIA Miguel\\Documents\\Segundo\\Diseño y Análisis de Algoritmos\\Proyecto2\\";
-        String URL_BASE = "/home/komodo/Documents/Cic/Semestre 2/Diseño y Análisis  de Algoritmos/Proyecto 2/archivosGV/";
+        String URL_BASE = "C:\\Users\\SIA Miguel\\Documents\\Segundo\\Diseño y Análisis de Algoritmos\\Proyecto2\\";
+        //String URL_BASE = "/home/komodo/Documents/Cic/Semestre 2/Diseño y Análisis  de Algoritmos/Proyecto 2/archivosGV/";
         proyecto2(URL_BASE);
         
     }
@@ -77,26 +72,48 @@ public class ADAProject {
     public static void proyecto2(final String URL_BASE){
         /* PROYECTO 2 */      
         try{
-            // Creamos el grafo aleatorio
-            Graph g = Graph.createByErdosRenyi(false, false, 10, 10);  
-            System.out.println("\n\n-- Grafo para BFS/DFS --");
-            System.out.println(g);            
-            g.toGraphviz(URL_BASE + "Original-Aleatorio.gv");  
+            Graph g = null;
+            Graph bfsTree = null;
+            Graph dfsTree = null;
             
-            Graph bfsTree = Search.BFS(g, g.getV().get(0));            
-            System.out.println("\n\n-- Arbol BFS --");
-            System.out.println(bfsTree);            
-            bfsTree.toGraphviz(URL_BASE + "BFS-Tree.gv");  
+            // Creamos el grafo aleatorio ERDOS RENYI Pocos Nodos
+//            g = Graph.createByErdosRenyi(false, false, 10, 20);  
+//            g.toGraphviz(URL_BASE + "ErdosRenyi1.gv");  
+//            
+//            bfsTree = Search.BFS(g, g.getV().get(0));   
+//            bfsTree.toGraphviz(URL_BASE + "ErdosRenyi1-BFS.gv");  
+//            
+//            dfsTree = Search.DFS_R(g, g.getV().get(0));
+//            dfsTree.toGraphviz(URL_BASE + "ErdosRenyi1-DFS-R.gv");
+//            
+//            dfsTree = Search.DFS_I(g, g.getV().get(0));     
+//            dfsTree.toGraphviz(URL_BASE + "ErdosRenyi1-DFS-I.gv");
             
-            Graph dfsTree = Search.DFS_R(g, g.getV().get(0));            
-            System.out.println("\n\n-- Arbol DFS_R --");
-            System.out.println(dfsTree);            
-            dfsTree.toGraphviz(URL_BASE + "DFS-R-Tree.gv");
-            
-            dfsTree = Search.DFS_I(g, g.getV().get(0));            
-            System.out.println("\n\n-- Arbol DFS_I --");
-            System.out.println(dfsTree);            
-            dfsTree.toGraphviz(URL_BASE + "DFS-I-Tree.gv");
+            // Creamos el grafo aleatorio ERDOS RENYI Muchos Nodos
+//            g = Graph.createByErdosRenyi(false, false, 500, 1000);  
+//            g.toGraphviz(URL_BASE + "ErdosRenyi2.gv");  
+//            
+//            bfsTree = Search.BFS(g, g.getV().get(0));   
+//            bfsTree.toGraphviz(URL_BASE + "ErdosRenyi2-BFS.gv");  
+//            
+//            dfsTree = Search.DFS_R(g, g.getV().get(0));
+//            dfsTree.toGraphviz(URL_BASE + "ErdosRenyi2-DFS-R.gv");
+//            
+//            dfsTree = Search.DFS_I(g, g.getV().get(0));     
+//            dfsTree.toGraphviz(URL_BASE + "ErdosRenyi2-DFS-I.gv");
+
+            // Creamos el grafo aleatorio GILBERT Pocos Nodos
+//            g = Graph.createByGilbert(false, false, 10, 0.5f);  
+//            g.toGraphviz(URL_BASE + "Gilbert1.gv");  
+//            
+//            bfsTree = Search.BFS(g, g.getV().get(0));   
+//            bfsTree.toGraphviz(URL_BASE + "Gilbert1-BFS.gv");  
+//            
+//            dfsTree = Search.DFS_R(g, g.getV().get(0));
+//            dfsTree.toGraphviz(URL_BASE + "Gilbert1-DFS-R.gv");
+//            
+//            dfsTree = Search.DFS_I(g, g.getV().get(0));     
+//            dfsTree.toGraphviz(URL_BASE + "Gilbert1-DFS-I.gv");
             
         } catch (Exception ex) {
             Logger.getLogger(ADAProject.class.getName()).log(Level.SEVERE, null, ex);
