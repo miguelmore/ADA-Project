@@ -30,6 +30,9 @@ public class ADAProject {
         //String URL_BASE = "/home/komodo/Documents/Cic/Semestre 2/Diseño y Análisis  de Algoritmos/Proyecto 2/archivosGV/";
         proyecto2(URL_BASE);
         
+        // Pruebas para Examen 1
+        //String URL_BASE = "C:\\Users\\SIA Miguel\\Documents\\Segundo\\Diseño y Análisis de Algoritmos\\Examen1\\gv\\";
+        //examen1(URL_BASE);
     }
     
 
@@ -114,10 +117,67 @@ public class ADAProject {
 //            
 //            dfsTree = Search.DFS_I(g, g.getV().get(0));     
 //            dfsTree.toGraphviz(URL_BASE + "Gilbert1-DFS-I.gv");
+
+            // Creamos el grafo aleatorio GILBERT muchos Nodos
+//            g = Graph.createByGilbert(false, false, 500, 0.5f);  
+//            g.toGraphviz(URL_BASE + "Gilbert2.gv");  
+//            
+//            bfsTree = Search.BFS(g, g.getV().get(0));   
+//            bfsTree.toGraphviz(URL_BASE + "Gilbert2-BFS.gv");  
+//            
+//            dfsTree = Search.DFS_R(g, g.getV().get(0));
+//            dfsTree.toGraphviz(URL_BASE + "Gilbert2-DFS-R.gv");
+//            
+//            dfsTree = Search.DFS_I(g, g.getV().get(0));     
+//            dfsTree.toGraphviz(URL_BASE + "Gilbert2-DFS-I.gv");
+
+            // Creamos el grafo aleatorio GEOGRAPHIC pocos nodos
+//            g = Graph.createByGeographic(false, false, 10, 0.2f);
+//            g.toGraphviz(URL_BASE + "Geographic1.gv");  
+//            
+//            bfsTree = Search.BFS(g, g.getV().get(0));   
+//            bfsTree.toGraphviz(URL_BASE + "Geographic1-BFS.gv");  
+//            
+//            dfsTree = Search.DFS_R(g, g.getV().get(0));
+//            dfsTree.toGraphviz(URL_BASE + "Geographic1-DFS-R.gv");
+//            
+//            dfsTree = Search.DFS_I(g, g.getV().get(0));     
+//            dfsTree.toGraphviz(URL_BASE + "Geographic1-DFS-I.gv");
+
+            // Creamos el grafo aleatorio GEOGRAPHIC muchos nodos
+//            g = Graph.createByGeographic(false, false, 500, 0.2f);
+//            g.toGraphviz(URL_BASE + "Geographic2.gv");  
+//            
+//            bfsTree = Search.BFS(g, g.getV().get(0));   
+//            bfsTree.toGraphviz(URL_BASE + "Geographic2-BFS.gv");  
+//            
+//            dfsTree = Search.DFS_R(g, g.getV().get(0));
+//            dfsTree.toGraphviz(URL_BASE + "Geographic2-DFS-R.gv");
+//            
+//            dfsTree = Search.DFS_I(g, g.getV().get(0));     
+//            dfsTree.toGraphviz(URL_BASE + "Geographic2-DFS-I.gv");
             
         } catch (Exception ex) {
             Logger.getLogger(ADAProject.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
+    
+    public static void examen1(final String URL_BASE){
+        try {
+            int numNodos = 10;            
+            // Generamos grafos
+            System.out.println("\n\n-- Grafo Generado --");
+            Graph g = Graph.createByErdosRenyi(false, false, numNodos, 8);
+            System.out.println(g);            
+            String destFile = URL_BASE + "Examen1-Original.gv";            
+            g.toGraphviz(destFile);
+            
+            Graph dfsTree = Search.DFS_I_FindCycle(g, g.getV().get(0));     
+            dfsTree.toGraphviz(URL_BASE + "Examen1-DFS-I.gv");
+            
+        } catch (Exception ex) {
+            Logger.getLogger(ADAProject.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

@@ -240,5 +240,105 @@ public class Search {
         
         return dfsTree;
     }
+    
+    /**
+     * Modificacion al DFS_I para buscar ciclos en el grafo
+     * @param graph
+     * @param s
+     * @return
+     * @throws Exception 
+     */
+    public static Graph DFS_I_FindCycle(Graph graph, Node s) throws Exception{
+        Graph dfsTree = new UDGraph();
+               
+        // Por cada nodo agregamos una bandera 
+        // para saber si ya fue explorado
+        final String EXP = "explored";
+        graph.getV().forEach((n) -> {
+            n.addData(EXP, false);
+        });
+                   
+        // Clase para guardar arista relacionada al nodo por explorar
+        class NodeEdge{
+            Node parent;
+            Node node;
+            Edge edge;
+
+            public NodeEdge(Node node, Edge edge,Node parent) {
+                this.parent = parent;
+                this.node = node;
+                this.edge = edge;
+            }
+            
+        }
+        
+        // Pila en donde almacenaremos los nodos por explorar
+        Stack<NodeEdge> stack = new Stack<>();
+        NodeEdge node_edge = null;
+        
+        // Se comienza por explorar el nodo raiz
+        node_edge = new NodeEdge(s,null,null);
+        stack.push(node_edge);
+        
+        // Marcamos el nodo raiz y agregamos al arbol
+        s.replaceData(EXP, true);
+        dfsTree.getV().add(s);
+        
+        List<Edge> edges = null;
+        Node s_parent = null;
+        
+        // Mientras la pila no este vacia
+        while(!stack.isEmpty()){
+            // Sacamos un nodo de la pila para procesar
+            // y marcamos como explorado
+            node_edge = stack.pop();
+            s = node_edge.node;
+            s_parent = node_edge.parent;
+            
+            // Si no ha sido explorado
+            if(!(boolean)s.getData(EXP))
+            {
+                // Se agrega nodo y arista al arbol
+                // y se marca el nodo
+                dfsTree.getV().add(s);
+                dfsTree.getE().add(node_edge.edge);
+                s.replaceData(EXP, true);
+            }
+            
+            // Obtenemos arista origen en s
+            edges = Graph.getEdgesBySource(s, graph.getE(), graph.isDigraph());
+            
+            // Por cada arista, buscamos su nodo target
+            Node target = null;
+            for (Edge e : edges) {               
+
+                if(graph.isDigraph()){
+                    target = e.getTarget();
+                }
+                else{
+                    if(e.getSource().getId().equals(s.getId()))
+                        target = e.getTarget();
+                    else
+                        target = e.getSource();
+                }
+                
+                // Si no ha sido explorado, se agrega a pila por explorar
+                if(!(boolean)target.getData(EXP))
+                {
+                    stack.push(new NodeEdge(target,e,s));
+                }                
+                // Si ya fue explorado
+                else{
+                    // Si el target no es padre de s, hay ciclo
+                    if(!target.getId().equals(s_parent.getId())){
+                        System.out.println("Hay ciclo en el grafo");
+                    }
+                }
+            }
+            
+        }        
+        
+        return dfsTree;
+    }
 
 }
