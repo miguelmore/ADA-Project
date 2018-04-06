@@ -230,8 +230,7 @@ public class ADAProject {
             System.out.println("Creando Erdos Dirigido con Costo...");
             g = Graph.createByErdosRenyi(true, false, 10, 20, true);  
             g.toGraphviz(URL_BASE + "ErdosRenyi.gv");     
-            System.out.println(g);
-            
+            System.out.println(g);            
         } catch (Exception ex) {
             Logger.getLogger(ADAProject.class.getName()).log(Level.SEVERE, null, ex);
         }
