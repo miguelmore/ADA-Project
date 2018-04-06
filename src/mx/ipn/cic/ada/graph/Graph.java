@@ -123,11 +123,16 @@ public abstract class Graph {
      * @return grafo generado
      * @throws Exception 
      */
-    public static Graph createByErdosRenyi(boolean isDigraph, boolean hasAutocycle, int n, int m) throws Exception{        
+    public static Graph createByErdosRenyi(boolean isDigraph, boolean hasAutocycle, int n,
+            int m, boolean hasEdgeCost) throws Exception{        
         Graph graph = null;
         
         // Validamos los datos de entrada
         validateInput(isDigraph,hasAutocycle,n,m);
+        
+        // Validamos Aristas con costo
+        if(hasEdgeCost && !isDigraph)
+            throw new Exception("No pueden existir aristas con costo a un grafo no dirigido");
         
         // Construimos grafos
         if(isDigraph)
@@ -155,6 +160,14 @@ public abstract class Graph {
             
             // Validamos que no exista la arista
             if(!existsEdge(e,graph.getE(),isDigraph)){
+                
+                // Validamos si debe tener un costo
+                if(hasEdgeCost){
+                    int costo = (int) (Math.random() * 50) + 1;
+                    e.addObject(Edge.COST, costo);
+                }
+                                
+                
                 // Agregamos
                 graph.addEdge(e);
                 count++;

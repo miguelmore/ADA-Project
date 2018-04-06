@@ -26,13 +26,18 @@ public class ADAProject {
         //proyecto1(URL_BASE);
                 
         /** Pruebas del Proyecto 2 **/
-        String URL_BASE = "C:\\Users\\SIA Miguel\\Documents\\Segundo\\Diseño y Análisis de Algoritmos\\Proyecto2\\";
+        //String URL_BASE = "C:\\Users\\SIA Miguel\\Documents\\Segundo\\Diseño y Análisis de Algoritmos\\Proyecto2\\";
         //String URL_BASE = "/home/komodo/Documents/Cic/Semestre 2/Diseño y Análisis  de Algoritmos/Proyecto 2/archivosGV/";
-        proyecto2(URL_BASE);
+        //proyecto2(URL_BASE);
         
         /** Pruebas para Examen 1 **/
         //String URL_BASE = "C:\\Users\\SIA Miguel\\Documents\\Segundo\\Diseño y Análisis de Algoritmos\\Examen1\\gv\\";
         //examen1(URL_BASE);
+        
+        /** Pruebas del Proyecto 2 **/
+        //String URL_BASE = "C:\\Users\\SIA Miguel\\Documents\\Segundo\\Diseño y Análisis de Algoritmos\\Proyecto2\\";
+        String URL_BASE = "/home/komodo/Documents/Cic/Semestre 2/Diseño y Análisis  de Algoritmos/Proyecto 3/archivosGV/";
+        proyecto3(URL_BASE);
     }
     
 
@@ -42,7 +47,7 @@ public class ADAProject {
             int numNodos = 30;            
             // Generamos grafos
             System.out.println("\n\n-- Grafo Erdos Renyi --");
-            Graph g1 = Graph.createByErdosRenyi(false, true, numNodos, numNodos*2);
+            Graph g1 = Graph.createByErdosRenyi(false, true, numNodos, numNodos*2, false);
             System.out.println(g1);            
             String destFile = URL_BASE + "ErdosRenyi-"+numNodos+".gv";            
             g1.toGraphviz(destFile);
@@ -81,7 +86,7 @@ public class ADAProject {
             
             // Creamos el grafo aleatorio ERDOS RENYI Pocos Nodos
             System.out.println("Creando Erdos Pocos Nodos...");
-            g = Graph.createByErdosRenyi(false, false, 10, 20);  
+            g = Graph.createByErdosRenyi(false, false, 10, 20, false);  
             g.toGraphviz(URL_BASE + "ErdosRenyi1.gv");  
             
             bfsTree = Search.BFS(g, g.getV().get(0));   
@@ -95,7 +100,7 @@ public class ADAProject {
             
             // Creamos el grafo aleatorio ERDOS RENYI Muchos Nodos
             System.out.println("Creando Erdos Muchos Nodos...");
-            g = Graph.createByErdosRenyi(false, false, 500, 1000);  
+            g = Graph.createByErdosRenyi(false, false, 500, 1000, false);  
             g.toGraphviz(URL_BASE + "ErdosRenyi2.gv");  
             
             bfsTree = Search.BFS(g, g.getV().get(0));   
@@ -203,13 +208,29 @@ public class ADAProject {
             int numNodos = 10;            
             // Generamos grafos
             System.out.println("\n\n-- Grafo Generado --");
-            Graph g = Graph.createByErdosRenyi(false, false, numNodos, 8);
+            Graph g = Graph.createByErdosRenyi(false, false, numNodos, 8, false);
             System.out.println(g);            
             String destFile = URL_BASE + "Examen1-Original.gv";            
             g.toGraphviz(destFile);
             
             Graph dfsTree = Search.DFS_I_FindCycle(g, g.getV().get(0));     
             dfsTree.toGraphviz(URL_BASE + "Examen1-DFS-I.gv");
+            
+        } catch (Exception ex) {
+            Logger.getLogger(ADAProject.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static void proyecto3(final String URL_BASE){
+        /* PROYECTO 3 */      
+        try{
+            Graph g = null;
+            
+            // Creamos el grafo aleatorio ERDOS RENYI Pocos Nodos
+            System.out.println("Creando Erdos Dirigido con Costo...");
+            g = Graph.createByErdosRenyi(true, false, 10, 20, true);  
+            g.toGraphviz(URL_BASE + "ErdosRenyi.gv");     
+            System.out.println(g);
             
         } catch (Exception ex) {
             Logger.getLogger(ADAProject.class.getName()).log(Level.SEVERE, null, ex);
