@@ -34,9 +34,9 @@ public class ADAProject {
         //String URL_BASE = "C:\\Users\\SIA Miguel\\Documents\\Segundo\\Diseño y Análisis de Algoritmos\\Examen1\\gv\\";
         //examen1(URL_BASE);
         
-        /** Pruebas del Proyecto 2 **/
-        //String URL_BASE = "C:\\Users\\SIA Miguel\\Documents\\Segundo\\Diseño y Análisis de Algoritmos\\Proyecto2\\";
-        String URL_BASE = "/home/komodo/Documents/Cic/Semestre 2/Diseño y Análisis  de Algoritmos/Proyecto 3/archivosGV/";
+        /** Pruebas del Proyecto 3 **/
+        String URL_BASE = "C:\\Users\\SIA Miguel\\Documents\\Segundo\\Diseño y Análisis de Algoritmos\\Proyecto3\\";
+        //String URL_BASE = "/home/komodo/Documents/Cic/Semestre 2/Diseño y Análisis  de Algoritmos/Proyecto 3/archivosGV/";
         proyecto3(URL_BASE);
     }
     
@@ -53,19 +53,19 @@ public class ADAProject {
             g1.toGraphviz(destFile);
             
             System.out.println("\n\n-- Grafo Gilbert --");
-            g1 = Graph.createByGilbert(false, true, numNodos, 0.5f);
+            g1 = Graph.createByGilbert(false, true, numNodos, 0.5f, false);
             System.out.println(g1);            
             destFile = URL_BASE + "Gilbert-"+numNodos+".gv";
             g1.toGraphviz(destFile);
             
             System.out.println("\n\n-- Grafo Geográfico Simple --");
-            g1 = Graph.createByGeographic(false, false, numNodos, 0.1f);
+            g1 = Graph.createByGeographic(false, false, numNodos, 0.1f, false);
             System.out.println(g1);
             destFile = URL_BASE + "Geographic-"+numNodos+".gv";
             g1.toGraphviz(destFile);            
             
             System.out.println("\n\n-- Grafo createByBarabasiAlbert --");
-            g1 = Graph.createByBarabasiAlbert(false, numNodos, numNodos/10);
+            g1 = Graph.createByBarabasiAlbert(false, numNodos, numNodos/10, false);
             System.out.println(g1);
             destFile = URL_BASE + "BarabasiAlbert-"+numNodos+".gv";
             g1.toGraphviz(destFile);
@@ -114,7 +114,7 @@ public class ADAProject {
 
             // Creamos el grafo aleatorio GILBERT Pocos Nodos
             System.out.println("Creando Gilbert Pocos Nodos...");
-            g = Graph.createByGilbert(false, false, 10, 0.5f);  
+            g = Graph.createByGilbert(false, false, 10, 0.5f, false);  
             g.toGraphviz(URL_BASE + "Gilbert1.gv");  
             
             bfsTree = Search.BFS(g, g.getV().get(0));   
@@ -128,7 +128,7 @@ public class ADAProject {
 
             // Creamos el grafo aleatorio GILBERT muchos Nodos
             System.out.println("Creando Gilbert Muchos Nodos...");
-            g = Graph.createByGilbert(false, false, 500, 0.5f);  
+            g = Graph.createByGilbert(false, false, 500, 0.5f, false);  
             g.toGraphviz(URL_BASE + "Gilbert2.gv");  
             
             bfsTree = Search.BFS(g, g.getV().get(0));   
@@ -142,7 +142,7 @@ public class ADAProject {
 
             // Creamos el grafo aleatorio GEOGRAPHIC pocos nodos
             System.out.println("Creando Geographic Pocos Nodos...");
-            g = Graph.createByGeographic(false, false, 10, 0.2f);
+            g = Graph.createByGeographic(false, false, 10, 0.2f, false);
             g.toGraphviz(URL_BASE + "Geographic1.gv");  
             
             bfsTree = Search.BFS(g, g.getV().get(0));   
@@ -156,7 +156,7 @@ public class ADAProject {
 
             // Creamos el grafo aleatorio GEOGRAPHIC muchos nodos
             System.out.println("Creando Geographic Muchos Nodos...");
-            g = Graph.createByGeographic(false, false, 500, 0.2f);
+            g = Graph.createByGeographic(false, false, 500, 0.2f, false);
             g.toGraphviz(URL_BASE + "Geographic2.gv");  
             
             bfsTree = Search.BFS(g, g.getV().get(0));   
@@ -171,7 +171,7 @@ public class ADAProject {
 
             // Creamos el grafo aleatorio BARABASI pocos nodos
             System.out.println("Creando Barabasi Albert Pocos Nodos...");
-            g = Graph.createByBarabasiAlbert(false, 10, 4);
+            g = Graph.createByBarabasiAlbert(false, 10, 4, false);
             g.toGraphviz(URL_BASE + "BarabasiAlbert1.gv");  
             
             bfsTree = Search.BFS(g, g.getV().get(0));   
@@ -185,7 +185,7 @@ public class ADAProject {
 
             // Creamos el grafo aleatorio BARABASI muchos nodos
             System.out.println("Creando Barabasi Albert Muchos Nodos...");
-            g = Graph.createByBarabasiAlbert(false, 500, 50);
+            g = Graph.createByBarabasiAlbert(false, 500, 50, false);
             g.toGraphviz(URL_BASE + "BarabasiAlbert2.gv");  
             
             bfsTree = Search.BFS(g, g.getV().get(0));   
@@ -230,7 +230,8 @@ public class ADAProject {
             System.out.println("Creando Erdos Dirigido con Costo...");
             g = Graph.createByErdosRenyi(true, false, 10, 20, true);  
             g.toGraphviz(URL_BASE + "ErdosRenyi.gv");     
-            System.out.println(g);            
+            System.out.println(g);    
+            
         } catch (Exception ex) {
             Logger.getLogger(ADAProject.class.getName()).log(Level.SEVERE, null, ex);
         }

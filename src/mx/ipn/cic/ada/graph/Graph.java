@@ -120,6 +120,7 @@ public abstract class Graph {
      * @param hasAutocycle si permite autociclos
      * @param n numero de nodos
      * @param m numero de aristas
+     * @param hasEdgeCost si las aristas tendrán costo
      * @return grafo generado
      * @throws Exception 
      */
@@ -163,10 +164,9 @@ public abstract class Graph {
                 
                 // Validamos si debe tener un costo
                 if(hasEdgeCost){
-                    int costo = (int) (Math.random() * 50) + 1;
+                    int costo = (int) (Math.random() * Edge.MAX_COST) + 1;
                     e.addObject(Edge.COST, costo);
-                }
-                                
+                }                               
                 
                 // Agregamos
                 graph.addEdge(e);
@@ -195,15 +195,21 @@ public abstract class Graph {
      * @param hasAutocycle si permite autociclos
      * @param n numero de nodos
      * @param p probabilida de tener arista
+     * @param hasEdgeCost si las aristas tendrán costo
      * @return grafo generado
      * @throws Exception 
      */
-    public static Graph createByGilbert(boolean isDigraph, boolean hasAutocycle, int n, float p) throws Exception{        
+    public static Graph createByGilbert(boolean isDigraph, boolean hasAutocycle, int n,
+            float p, boolean hasEdgeCost) throws Exception{        
         Graph graph = null;
         
         // Validamos los datos de entrada
         if(p<0 || p>1)
             throw new Exception("El valor de p debe estar entre 0 y 1");
+        
+        // Validamos Aristas con costo
+        if(hasEdgeCost && !isDigraph)
+            throw new Exception("No pueden existir aristas con costo a un grafo no dirigido");
         
         // Construimos grafos
         if(isDigraph)
@@ -232,6 +238,13 @@ public abstract class Graph {
                     
                     Edge e = new Edge(n1, n2);
                     if(!existsEdge(e,graph.getE(),isDigraph)){
+                        
+                        // Validamos si debe tener un costo
+                        if(isDigraph && hasEdgeCost){
+                            int costo = (int) (Math.random() * Edge.MAX_COST) + 1;
+                            e.addObject(Edge.COST, costo);
+                        }
+                        
                         // Agregamos
                         graph.addEdge(e);
                     }
@@ -249,16 +262,22 @@ public abstract class Graph {
      * @param isDigraph tipo de grafo
      * @param hasAutocycle si permite autociclos
      * @param n numero de nodos
-     * @param r distancia maxima del nodo vecino
+     * @param r distancia maxima del nodo vecino  
+     * @param hasEdgeCost si las aristas tendrán costo
      * @return grafo generado
      * @throws Exception 
      */
-    public static Graph createByGeographic(boolean isDigraph, boolean hasAutocycle, int n, float r) throws Exception{
+    public static Graph createByGeographic(boolean isDigraph, boolean hasAutocycle, int n,
+            float r, boolean hasEdgeCost) throws Exception{
         Graph graph = null;
         
         // Validamos los datos de entrada
         if(r<=0)
             throw new Exception("La distancia r debe ser mayor a 0");
+        
+        // Validamos Aristas con costo
+        if(hasEdgeCost && !isDigraph)
+            throw new Exception("No pueden existir aristas con costo a un grafo no dirigido");
         
         // Construimos grafos
         if(isDigraph)
@@ -303,6 +322,12 @@ public abstract class Graph {
                 if(ni.getId().equals(nj.getId())){
                     if(hasAutocycle){                            
                         Edge e = new Edge(ni, nj);
+                        
+                        // Validamos si debe tener un costo
+                        if(isDigraph && hasEdgeCost){
+                            e.addObject(Edge.COST, 0);
+                        }
+                        
                         graph.addEdge(e);                           
                     }
                     else{
@@ -313,8 +338,16 @@ public abstract class Graph {
                     // Si distancia cumple, se crea arista
                     if(ni.calcDistance(nj) <= r){                            
                         Edge e = new Edge(ni, nj); 
-                        if(!existsEdge(e,graph.getE(),isDigraph))
+                        if(!existsEdge(e,graph.getE(),isDigraph)){
+                            
+                            // Validamos si debe tener un costo
+                            if(isDigraph && hasEdgeCost){
+                                int costo = (int) (Math.random() * Edge.MAX_COST) + 1;
+                                e.addObject(Edge.COST, costo);
+                            }
+                            
                             graph.addEdge(e);
+                        }
                     }
                 }
             }
@@ -327,16 +360,21 @@ public abstract class Graph {
      * Generacion de grafo por metodo Barabasi Albert
      * @param isDigraph tipo de grafo
      * @param n numero de nodos
-     * @param d numero máximo de aristas por nodo
+     * @param d numero máximo de aristas por nodo     * 
+     * @param hasEdgeCost si las aristas tendrán costo
      * @return grafo generado
      * @throws Exception 
      */
-    public static Graph createByBarabasiAlbert(boolean isDigraph, int n, int d) throws Exception{
+    public static Graph createByBarabasiAlbert(boolean isDigraph, int n, int d, boolean hasEdgeCost) throws Exception{
         Graph graph = null;
         
         // Validamos los datos de entrada
         if(d<=0)
             throw new Exception("El número de aristas d debe ser mayor a 0");
+        
+        // Validamos Aristas con costo
+        if(hasEdgeCost && !isDigraph)
+            throw new Exception("No pueden existir aristas con costo a un grafo no dirigido");
         
         // Construimos grafo
         if(isDigraph)
@@ -365,7 +403,15 @@ public abstract class Graph {
                     
                     // Si la probabilidad se cumple agregamos arista
                     if(random <= p){
-                       graph.addEdge(new Edge(newNode, vNode));
+                       Edge e = new Edge(newNode, vNode);
+                       
+                       // Validamos si debe tener un costo
+                       if(isDigraph && hasEdgeCost){
+                           int costo = (int) (Math.random() * Edge.MAX_COST) + 1;
+                           e.addObject(Edge.COST, costo);
+                       } 
+                        
+                       graph.addEdge(e);
                        //System.out.println("Arista de "+newNode.getId()+" a "+vNode.getId());
                     }                    
                 }
