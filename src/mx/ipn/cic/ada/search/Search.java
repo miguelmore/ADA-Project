@@ -345,8 +345,13 @@ public class Search {
         return dfsTree;
     }
 
-    
-    
+    /**
+     * Genera el grafo resultante del algoritmo Dijkstra
+     * @param g Grafo Dirigido
+     * @param source Nodo fuente
+     * @return
+     * @throws Exception 
+     */    
     public static DIGraph Dijkstra(DIGraph g, Node source) throws Exception{
         
         DIGraph shortPathGraph = new DIGraph();        
