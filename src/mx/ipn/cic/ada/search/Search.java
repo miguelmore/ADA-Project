@@ -369,8 +369,21 @@ public class Search {
         explored.add(source);
         shortPathGraph.addNode(source);
         
+        int disconnectCount = -1;
+        int previousSize = explored.size();
+        
         // Mientras los conjuntos sean diferentes
         while(!explored.containsAll(notExplored)){
+        
+            // Validacion para detectar si el grafo está desconectado
+            // y evitar ciclo infinito
+            if(explored.size() == previousSize){
+                disconnectCount++;                
+            }
+            previousSize = explored.size();
+            
+            if(disconnectCount>=1)
+                break;
             
             // Por cada nodo explorado
             int count = 0;
@@ -387,11 +400,12 @@ public class Search {
                         ).collect(Collectors.toList());
                 
                 // Recolectamos nodos por explorar
-                // Por cada nodo por explorar, calculamos distancia                
+                // Por cada nodo por explorar, calculamos distancia         
+                if(edges == null)
+                    System.out.println("Null");
                 edges.forEach(e -> {
-                    Node target = e.getTarget();                    
+                    Node target = e.getTarget(); 
                     int d = (int)expNode.getData(DIJK_DIS) + (int)e.getObject(Edge.COST);
-                    
                     //System.out.println("Edge: "+e+" d: "+d);
                     if(d<(int)target.getData(DIJK_DIS)){
                         target.replaceData(DIJK_DIS, d);  

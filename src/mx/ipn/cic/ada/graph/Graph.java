@@ -164,8 +164,8 @@ public abstract class Graph {
                 
                 // Validamos si debe tener un costo
                 if(hasEdgeCost){
-                    int costo = (int) (Math.random() * Edge.MAX_COST) + 1;
-                    e.addObject(Edge.COST, costo);
+                    int cost = (int) (Math.random() * Edge.MAX_COST) + 1;
+                    e.addObject(Edge.COST, cost);
                 }                               
                 
                 // Agregamos
@@ -177,6 +177,13 @@ public abstract class Graph {
                 if(isDigraph){
                     e = new Edge(e.getTarget(), e.getSource());
                     if(!existsEdge(e,graph.getE(),isDigraph)){
+                        
+                        // Validamos si debe tener un costo
+                        if(hasEdgeCost){
+                            int cost = (int) (Math.random() * Edge.MAX_COST) + 1;
+                            e.addObject(Edge.COST, cost);
+                        } 
+                        
                         // Agregamos
                         graph.addEdge(e);
                         count++;
