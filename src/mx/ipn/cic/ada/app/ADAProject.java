@@ -3,7 +3,10 @@ package mx.ipn.cic.ada.app;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import mx.ipn.cic.ada.graph.DIGraph;
+import mx.ipn.cic.ada.graph.Edge;
 import mx.ipn.cic.ada.graph.Graph;
+import mx.ipn.cic.ada.graph.Node;
 import mx.ipn.cic.ada.search.Search;
 
 /**
@@ -35,8 +38,8 @@ public class ADAProject {
         //examen1(URL_BASE);
         
         /** Pruebas del Proyecto 3 **/
-        String URL_BASE = "C:\\Users\\SIA Miguel\\Documents\\Segundo\\Diseño y Análisis de Algoritmos\\Proyecto3\\";
-        //String URL_BASE = "/home/komodo/Documents/Cic/Semestre 2/Diseño y Análisis  de Algoritmos/Proyecto 3/archivosGV/";
+        //String URL_BASE = "C:\\Users\\SIA Miguel\\Documents\\Segundo\\Diseño y Análisis de Algoritmos\\Proyecto3\\";
+        String URL_BASE = "/home/komodo/Documents/Cic/Semestre 2/Diseño y Análisis  de Algoritmos/Proyecto 3/archivosGV/";
         proyecto3(URL_BASE);
     }
     
@@ -224,13 +227,85 @@ public class ADAProject {
     public static void proyecto3(final String URL_BASE){
         /* PROYECTO 3 */      
         try{
-            Graph g = null;
+            DIGraph dig = null; 
+
+            // Ejemplo revisado en Clase
+            dig = new DIGraph();
+            for (int i = 1; i <= 8; i++) {
+                dig.addNode(new Node(String.valueOf(i)));
+            }
             
-            // Creamos el grafo aleatorio ERDOS RENYI Pocos Nodos
-            System.out.println("Creando Erdos Dirigido con Costo...");
-            g = Graph.createByErdosRenyi(true, false, 10, 20, true);  
-            g.toGraphviz(URL_BASE + "ErdosRenyi.gv");     
-            System.out.println(g);    
+            Edge e = new Edge(dig.getNode("1"), dig.getNode("2"));
+            e.addObject(Edge.COST, 9);
+            dig.addEdge(e);
+            
+            e = new Edge(dig.getNode("1"), dig.getNode("6"));
+            e.addObject(Edge.COST, 14);
+            dig.addEdge(e);
+            
+            e = new Edge(dig.getNode("1"), dig.getNode("7"));
+            e.addObject(Edge.COST, 15);
+            dig.addEdge(e);
+            
+            e = new Edge(dig.getNode("2"), dig.getNode("3"));
+            e.addObject(Edge.COST, 24);
+            dig.addEdge(e);
+            
+            e = new Edge(dig.getNode("6"), dig.getNode("3"));
+            e.addObject(Edge.COST, 18);
+            dig.addEdge(e);
+            
+            e = new Edge(dig.getNode("6"), dig.getNode("5"));
+            e.addObject(Edge.COST, 30);
+            dig.addEdge(e);
+            
+            e = new Edge(dig.getNode("6"), dig.getNode("7"));
+            e.addObject(Edge.COST, 5);
+            dig.addEdge(e);
+            
+            e = new Edge(dig.getNode("7"), dig.getNode("5"));
+            e.addObject(Edge.COST, 20);
+            dig.addEdge(e);
+            
+            e = new Edge(dig.getNode("7"), dig.getNode("8"));
+            e.addObject(Edge.COST, 44);
+            dig.addEdge(e);
+            
+            e = new Edge(dig.getNode("5"), dig.getNode("3"));
+            e.addObject(Edge.COST, 2);
+            dig.addEdge(e);
+            
+            e = new Edge(dig.getNode("5"), dig.getNode("4"));
+            e.addObject(Edge.COST, 11);
+            dig.addEdge(e);
+            
+            e = new Edge(dig.getNode("5"), dig.getNode("8"));
+            e.addObject(Edge.COST, 16);
+            dig.addEdge(e);
+            
+            e = new Edge(dig.getNode("4"), dig.getNode("3"));
+            e.addObject(Edge.COST, 6);
+            dig.addEdge(e);
+            
+            e = new Edge(dig.getNode("4"), dig.getNode("8"));
+            e.addObject(Edge.COST, 6);
+            dig.addEdge(e);
+            
+            e = new Edge(dig.getNode("3"), dig.getNode("5"));
+            e.addObject(Edge.COST, 2);
+            dig.addEdge(e);
+            
+            e = new Edge(dig.getNode("3"), dig.getNode("8"));
+            e.addObject(Edge.COST, 19);
+            dig.addEdge(e);
+            
+            dig.toGraphviz(URL_BASE + "Digraph.gv");     
+            System.out.println(dig); 
+            
+            // Dijkstra
+            DIGraph shortPathGraph = Search.Dijkstra(dig, dig.getNode("1"));
+            shortPathGraph.toGraphviz(URL_BASE + "Dijkstra.gv");     
+            System.out.println(shortPathGraph);                
             
         } catch (Exception ex) {
             Logger.getLogger(ADAProject.class.getName()).log(Level.SEVERE, null, ex);

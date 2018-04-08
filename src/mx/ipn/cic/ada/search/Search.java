@@ -2,8 +2,11 @@
 package mx.ipn.cic.ada.search;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
+import java.util.stream.Collectors;
+import mx.ipn.cic.ada.graph.DIGraph;
 import mx.ipn.cic.ada.graph.Edge;
 import mx.ipn.cic.ada.graph.Graph;
 import mx.ipn.cic.ada.graph.Node;
@@ -15,8 +18,9 @@ import mx.ipn.cic.ada.graph.UDGraph;
  */
 public class Search {      
     
-    
-    
+    private static final String DIJK_DIS = "DIJKSTRA_DISTANCE";
+    private static final String DIJK_PRE_EDG = "DIJKSTRA_PREVIOUS_EDGE";
+    private static final Double INFINITE = new Double(Double.POSITIVE_INFINITY);   
     
     /**
      * Breadth First Search
@@ -343,7 +347,82 @@ public class Search {
 
     
     
-    
+    public static DIGraph Dijkstra(DIGraph g, Node source) throws Exception{
+        
+        DIGraph shortPathGraph = new DIGraph();        
+        List<Node> explored = new ArrayList<>();
+        List<Node> notExplored = new ArrayList<>();
+        
+        // Agregamos todos los nodos a no explorados
+        g.getV().forEach(node -> notExplored.add(node));
+        
+        // Agregamos distancia infinita 
+        notExplored.forEach(node -> node.addData(DIJK_DIS, INFINITE.intValue()));
+        
+        // Se agrega el nodo fuente como explorado
+        source.replaceData(DIJK_DIS, 0);
+        explored.add(source);
+        shortPathGraph.addNode(source);
+        
+        // Mientras los conjuntos sean diferentes
+        while(!explored.containsAll(notExplored)){
+            
+            // Por cada nodo explorado
+            int count = 0;
+            List<Node> toExplore = new ArrayList<>();
+            for(Node expNode : explored){
+                
+                // Buscamos nodos con arista origen en Explored
+                // Y destino en NotExplored
+                List<Edge> edges = Graph.getEdgesBySource(expNode, g.getE(), true);                
+                                
+                // Filtramos por nodos destino no explorados
+                edges = edges.stream().filter(
+                            e -> !explored.contains(e.getTarget())
+                        ).collect(Collectors.toList());
+                
+                // Recolectamos nodos por explorar
+                // Por cada nodo por explorar, calculamos distancia                
+                edges.forEach(e -> {
+                    Node target = e.getTarget();                    
+                    int d = (int)expNode.getData(DIJK_DIS) + (int)e.getObject(Edge.COST);
+                    
+                    //System.out.println("Edge: "+e+" d: "+d);
+                    if(d<(int)target.getData(DIJK_DIS)){
+                        target.replaceData(DIJK_DIS, d);  
+                        // Guardamos arista 
+                        target.addData(DIJK_PRE_EDG, e);
+                    }
+                                        
+                    toExplore.add(target);                    
+                });                                
+            }            
+            
+            // Seleccionamos el nodo con la menor distancia
+            // y lo marcamos como explorado
+            int dmin = INFINITE.intValue();
+            Node nodeMin = null;
+            for (Node n : toExplore) {
+                if((int)n.getData(DIJK_DIS)<dmin){
+                    dmin = (int)n.getData(DIJK_DIS);
+                    nodeMin = n;
+                }  
+            }
+
+            // marcar node min
+            if(nodeMin != null){
+                Edge edgeSource = (Edge) nodeMin.getData(DIJK_PRE_EDG);
+                explored.add(nodeMin);
+                //System.out.println("De "+edgeSource.getSource()+" hacia "+nodeMin);
+                
+                // Agregamos al grafo
+                shortPathGraph.addNode(nodeMin);
+                shortPathGraph.addEdge(edgeSource);
+            }                     
+        }        
+        
+        return shortPathGraph;
+    }
     
     
 }
