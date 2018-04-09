@@ -10,7 +10,7 @@ import java.util.HashMap;
 public class Edge {
     
     public static final String COST = "COST"; // Key para dato del costo
-    public static final int MAX_COST = 50; // Key para valor maximo del costo
+    public static final int MAX_COST = 10; // Key para valor maximo del costo
     
     private Node source;
     private Node target;

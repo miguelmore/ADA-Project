@@ -4,9 +4,7 @@ package mx.ipn.cic.ada.app;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import mx.ipn.cic.ada.graph.DIGraph;
-import mx.ipn.cic.ada.graph.Edge;
 import mx.ipn.cic.ada.graph.Graph;
-import mx.ipn.cic.ada.graph.Node;
 import mx.ipn.cic.ada.search.Search;
 
 /**
@@ -38,8 +36,8 @@ public class ADAProject {
         //examen1(URL_BASE);
         
         /** Pruebas del Proyecto 3 **/
-        //String URL_BASE = "C:\\Users\\SIA Miguel\\Documents\\Segundo\\Diseño y Análisis de Algoritmos\\Proyecto3\\";
-        String URL_BASE = "/home/komodo/Documents/Cic/Semestre 2/Diseño y Análisis  de Algoritmos/Proyecto 3/archivosGV/";
+        String URL_BASE = "C:\\Users\\SIA Miguel\\Documents\\Segundo\\Diseño y Análisis de Algoritmos\\Proyecto3\\";
+        //String URL_BASE = "/home/komodo/Documents/Cic/Semestre 2/Diseño y Análisis  de Algoritmos/Proyecto 3/archivosGV/";
         proyecto3(URL_BASE);
     }
     
@@ -227,6 +225,7 @@ public class ADAProject {
     public static void proyecto3(final String URL_BASE){
         /* PROYECTO 3 */      
 //        try{
+//            System.out.println("\nEjemplo revisado en Clase");
 //            DIGraph dig = null; 
 //
 //            // Ejemplo revisado en Clase
@@ -312,11 +311,13 @@ public class ADAProject {
 //        }
                         
         try{
-            System.out.println("\nErdos");
-            DIGraph dig = (DIGraph) Graph.createByErdosRenyi(true, false, 10, 9, true);
+            System.out.println("\nEjemplo Erdos");
+            DIGraph dig = (DIGraph) Graph.createByErdosRenyi(true, false, 10, 10, true);
+            dig.toGraphviz(URL_BASE + "Digraph.gv");
             System.out.println(dig);            
             // Dijkstra
             DIGraph shortPathGraph = Search.Dijkstra(dig, dig.getNode("1"));
+            shortPathGraph.toGraphviz(URL_BASE + "Dijkstra.gv");
             System.out.println(shortPathGraph);                
             
         } catch (Exception ex) {
