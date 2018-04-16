@@ -252,8 +252,9 @@ public class Search {
      * @return
      * @throws Exception 
      */
-    public static Graph DFS_I_FindCycle(Graph graph, Node s) throws Exception{
+    public static boolean DFS_I_FindCycle(Graph graph, Node s) throws Exception{
         Graph dfsTree = new UDGraph();
+        boolean hasCycle = false;
                
         // Por cada nodo agregamos una bandera 
         // para saber si ya fue explorado
@@ -292,6 +293,7 @@ public class Search {
         Node s_parent = null;
         
         // Mientras la pila no este vacia
+        code_while:
         while(!stack.isEmpty()){
             // Sacamos un nodo de la pila para procesar
             // y marcamos como explorado
@@ -311,6 +313,7 @@ public class Search {
             
             // Obtenemos arista origen en s
             edges = Graph.getEdgesBySource(s, graph.getE(), graph.isDigraph());
+            System.out.println("S: "+s);
             
             // Por cada arista, buscamos su nodo target
             Node target = null;
@@ -330,19 +333,60 @@ public class Search {
                 if(!(boolean)target.getData(EXP))
                 {
                     stack.push(new NodeEdge(target,e,s));
+                    //System.out.println("Push Padre: "+s+" Hijo: "+target);
                 }                
                 // Si ya fue explorado
                 else{
-                    // Si el target no es padre de s, hay ciclo
-                    if(!target.getId().equals(s_parent.getId())){
-                        System.out.println("Hay ciclo en el grafo");
+                    
+                    if(graph.isDigraph()){  
+                        // Si el target es padre de s
+                        if(target.getId().equals(s_parent.getId())){ 
+                                System.out.println("Hay ciclo en el grafo dirigido 1");
+                                System.out.println("Padre: "+s_parent+" Hijo: "+s+" Target: "+target);
+                                hasCycle = true;
+                                break code_while;
+                        }
+                        // Si el target no es padre de s
+                        else{ 
+                            // Se valida camino de target al padre de s
+//                            Edge auxEdge = new Edge(target, s_parent);
+//                            if(Graph.existsEdge(auxEdge, graph.getE(), true)){
+//                                System.out.println("Hay ciclo en el grafo dirigido 2");
+//                                System.out.println("Padre: "+s_parent+" Hijo: "+s+" Target: "+target);
+//                                hasCycle = true;
+//                                break code_while;
+//                            }  
+                            // Se busca camino de target hacia cada nodo del bfs                            
+                            for(Node node_dfs : dfsTree.getV()){
+                                Edge auxEdge = new Edge(s, node_dfs);
+                                System.out.println("Valid Nodo dfs: "+node_dfs+" Target: "+s);
+                                if(Graph.existsEdge(auxEdge, graph.getE(), true)){
+                                    System.out.println("Hay ciclo en el grafo dirigido 2");
+                                    System.out.println("Nodo dfs: "+node_dfs+" Target: "+s);
+                                    hasCycle = true;
+                                    break code_while;
+                                } 
+                            }
+
+
+                        }
+                        
                     }
+                    else{
+                        // Si el target no es padre de s
+                        if(!target.getId().equals(s_parent.getId())){
+                            System.out.println("Hay ciclo en el grafo no dirigido");
+                            System.out.println("Padre: "+s_parent+" Hijo: "+s+" Target: "+target);
+                            hasCycle = true;
+                            break code_while;
+                        }
+                    }                      
                 }
             }
             
         }        
         
-        return dfsTree;
+        return hasCycle;
     }
 
     /**

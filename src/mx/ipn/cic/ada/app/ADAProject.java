@@ -4,7 +4,9 @@ package mx.ipn.cic.ada.app;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import mx.ipn.cic.ada.graph.DIGraph;
+import mx.ipn.cic.ada.graph.Edge;
 import mx.ipn.cic.ada.graph.Graph;
+import mx.ipn.cic.ada.graph.Node;
 import mx.ipn.cic.ada.search.Search;
 
 /**
@@ -36,9 +38,14 @@ public class ADAProject {
         //examen1(URL_BASE);
         
         /** Pruebas del Proyecto 3 **/
-        String URL_BASE = "C:\\Users\\SIA Miguel\\Documents\\Segundo\\Diseño y Análisis de Algoritmos\\Proyecto3\\";
+        //String URL_BASE = "C:\\Users\\SIA Miguel\\Documents\\Segundo\\Diseño y Análisis de Algoritmos\\Proyecto3\\";
         //String URL_BASE = "/home/komodo/Documents/Cic/Semestre 2/Diseño y Análisis  de Algoritmos/Proyecto 3/archivosGV/";
-        proyecto3(URL_BASE);
+        //proyecto3(URL_BASE);
+        
+        /** Pruebas del Proyecto 4 **/
+        String URL_BASE = "C:\\Users\\SIA Miguel\\Documents\\Segundo\\Diseño y Análisis de Algoritmos\\Proyecto4\\";
+        //String URL_BASE = "/home/komodo/Documents/Cic/Semestre 2/Diseño y Análisis  de Algoritmos/Proyecto 3/archivosGV/";
+        proyecto4(URL_BASE);
     }
     
 
@@ -214,8 +221,7 @@ public class ADAProject {
             String destFile = URL_BASE + "Examen1-Original.gv";            
             g.toGraphviz(destFile);
             
-            Graph dfsTree = Search.DFS_I_FindCycle(g, g.getV().get(0));     
-            dfsTree.toGraphviz(URL_BASE + "Examen1-DFS-I.gv");
+            boolean hasCycle = Search.DFS_I_FindCycle(g, g.getV().get(0)); 
             
         } catch (Exception ex) {
             Logger.getLogger(ADAProject.class.getName()).log(Level.SEVERE, null, ex);
@@ -270,9 +276,6 @@ public class ADAProject {
 //            e.addObject(Edge.COST, 44);
 //            dig.addEdge(e);
 //            
-//            e = new Edge(dig.getNode("5"), dig.getNode("3"));
-//            e.addObject(Edge.COST, 2);
-//            dig.addEdge(e);
 //            
 //            e = new Edge(dig.getNode("5"), dig.getNode("4"));
 //            e.addObject(Edge.COST, 11);
@@ -319,6 +322,112 @@ public class ADAProject {
             DIGraph shortPathGraph = Search.Dijkstra(dig, dig.getNode("1"));
             shortPathGraph.toGraphviz(URL_BASE + "Dijkstra.gv");
             System.out.println(shortPathGraph);                
+            
+        } catch (Exception ex) {
+            Logger.getLogger(ADAProject.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static void proyecto4(final String URL_BASE){
+        /* PROYECTO 4 */                            
+        try{
+            System.out.println("\nEjemplo revisado en Clase de Dijkstra");
+            DIGraph dig = null; 
+
+            // Ejemplo revisado en Clase
+            dig = new DIGraph();
+            for (int i = 1; i <= 8; i++) {
+                dig.addNode(new Node(String.valueOf(i)));
+            }
+            
+            Edge e = new Edge(dig.getNode("1"), dig.getNode("2"));
+            e.addObject(Edge.COST, 9);
+            dig.addEdge(e);
+            
+            e = new Edge(dig.getNode("1"), dig.getNode("6"));
+            e.addObject(Edge.COST, 14);
+            dig.addEdge(e);
+            
+            e = new Edge(dig.getNode("1"), dig.getNode("7"));
+            e.addObject(Edge.COST, 15);
+            dig.addEdge(e);
+            
+            e = new Edge(dig.getNode("2"), dig.getNode("3"));
+            e.addObject(Edge.COST, 24);
+            dig.addEdge(e);
+            
+            e = new Edge(dig.getNode("6"), dig.getNode("3"));
+            e.addObject(Edge.COST, 18);
+            dig.addEdge(e);
+            
+            e = new Edge(dig.getNode("6"), dig.getNode("5"));
+            e.addObject(Edge.COST, 30);
+            dig.addEdge(e);
+            
+            e = new Edge(dig.getNode("6"), dig.getNode("7"));
+            e.addObject(Edge.COST, 5);
+            dig.addEdge(e);
+            
+            e = new Edge(dig.getNode("7"), dig.getNode("5"));
+            e.addObject(Edge.COST, 20);
+            dig.addEdge(e);
+            
+//            e = new Edge(dig.getNode("7"), dig.getNode("8"));
+//            e.addObject(Edge.COST, 44);
+//            dig.addEdge(e);
+            
+                       
+            e = new Edge(dig.getNode("5"), dig.getNode("4"));
+            e.addObject(Edge.COST, 11);
+            dig.addEdge(e);
+            
+//            e = new Edge(dig.getNode("5"), dig.getNode("8"));
+//            e.addObject(Edge.COST, 16);
+//            dig.addEdge(e);
+            
+            e = new Edge(dig.getNode("4"), dig.getNode("3"));
+            e.addObject(Edge.COST, 6);
+            dig.addEdge(e);
+            
+            e = new Edge(dig.getNode("4"), dig.getNode("8"));
+            e.addObject(Edge.COST, 6);
+            dig.addEdge(e);
+            
+//            e = new Edge(dig.getNode("3"), dig.getNode("5"));
+//            e.addObject(Edge.COST, 2);
+//            dig.addEdge(e);
+            
+            e = new Edge(dig.getNode("3"), dig.getNode("8"));
+            e.addObject(Edge.COST, 19);
+            dig.addEdge(e);
+            
+            // agregada
+            e = new Edge(dig.getNode("8"), dig.getNode("7"));
+            e.addObject(Edge.COST, 44);
+            dig.addEdge(e);
+            
+            //dig.toGraphviz(URL_BASE + "TestCiclo.gv");     
+            System.out.println(dig); 
+                        
+            System.out.println("\nEjemplo Erdos");
+            dig = (DIGraph) Graph.createByErdosRenyi(true, false, 10, 10, true);
+            dig.toGraphviz(URL_BASE + "TestCiclo.gv");
+            System.out.println(dig);            
+
+            // Validacion de ciclo
+            if(Search.DFS_I_FindCycle(dig, dig.getNode("1"))){
+                System.out.println("Tiene ciclo");
+            }
+            else{
+                System.out.println("No tiene ciclo");
+            }
+                
+            // Kruskal
+            //DIGraph mst = Search.Dijkstra(dig, dig.getNode("1"));
+            //mst.toGraphviz(URL_BASE + "Dijkstra.gv");
+            //System.out.println(mst);                
+            
+            
             
         } catch (Exception ex) {
             Logger.getLogger(ADAProject.class.getName()).log(Level.SEVERE, null, ex);

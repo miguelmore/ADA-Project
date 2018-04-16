@@ -30,36 +30,7 @@ public abstract class Graph {
             
     
     
-    private static boolean existsEdge(Edge e, List<Edge> E, boolean isDigraph){
-        boolean exists = true;
-        List result = null;
-        
-        if(isDigraph){
-            result = E.stream()
-                      .filter(edge -> 
-                               edge.getSource().getId().equals(e.getSource().getId())
-                               && edge.getTarget().getId().equals(e.getTarget().getId())
-                      )
-                      .collect(Collectors.toList());   
-            if(result.isEmpty())
-                exists = false;
-        }
-        else{
-            result = E.stream()
-                     .filter(edge -> 
-                            (edge.getSource().getId().equals(e.getSource().getId())
-                            && edge.getTarget().getId().equals(e.getTarget().getId()))
-                            || (edge.getSource().getId().equals(e.getTarget().getId())
-                            && edge.getTarget().getId().equals(e.getSource().getId()))
-                      )
-                      .collect(Collectors.toList());        
-            if(result.isEmpty())
-                exists = false;            
-        }
-        
-        
-        return exists;
-    }
+    
     
     private static void validateInput(boolean isDigraph, boolean hasAutocycle, int n, int m) throws Exception{        
         
@@ -112,6 +83,37 @@ public abstract class Graph {
         
         if(m > maxEdges) 
             throw new Exception("No pueden haber mas de "+maxEdges+" aristas");        
+    }
+    
+    public static boolean existsEdge(Edge e, List<Edge> E, boolean isDigraph){
+        boolean exists = true;
+        List result = null;
+        
+        if(isDigraph){
+            result = E.stream()
+                      .filter(edge -> 
+                               edge.getSource().getId().equals(e.getSource().getId())
+                               && edge.getTarget().getId().equals(e.getTarget().getId())
+                      )
+                      .collect(Collectors.toList());   
+            if(result.isEmpty())
+                exists = false;
+        }
+        else{
+            result = E.stream()
+                     .filter(edge -> 
+                            (edge.getSource().getId().equals(e.getSource().getId())
+                            && edge.getTarget().getId().equals(e.getTarget().getId()))
+                            || (edge.getSource().getId().equals(e.getTarget().getId())
+                            && edge.getTarget().getId().equals(e.getSource().getId()))
+                      )
+                      .collect(Collectors.toList());        
+            if(result.isEmpty())
+                exists = false;            
+        }
+        
+        
+        return exists;
     }
     
     /**
