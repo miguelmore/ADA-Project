@@ -468,6 +468,10 @@ public abstract class Graph {
         return V;
     }
 
+    public void setV(List<Node> V) {
+        this.V = V;
+    }
+        
     public List<Edge> getE() {
         return E;
     }      

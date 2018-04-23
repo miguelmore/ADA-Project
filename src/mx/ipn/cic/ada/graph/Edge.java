@@ -45,6 +45,8 @@ public class Edge {
     public Node getTarget() {
         return target;
     }   
+    
+    
 
     @Override
     public String toString() {
