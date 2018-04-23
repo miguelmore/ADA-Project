@@ -114,7 +114,15 @@ public class UDGraph extends Graph {
         // Aristas
         for(Edge e : this.E){
             sb.append(e.getSource().getId()+" -- ");
-            sb.append(e.getTarget().getId()+" ;\n");
+            sb.append(e.getTarget().getId());
+            
+            // si tiene costo
+            if(e.getObject(Edge.COST) != null){
+                sb.append("[ label = \"");
+                sb.append(e.getObject(Edge.COST).toString());
+                sb.append("\" ]");
+            }
+            sb.append(";\n");
         }             
         sb.append("}"); 
        

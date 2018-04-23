@@ -475,6 +475,10 @@ public abstract class Graph {
     public List<Edge> getE() {
         return E;
     }      
+
+    public void setE(List<Edge> E) {
+        this.E = E;
+    }       
     
     public boolean isDigraph(){
         return this instanceof DIGraph;

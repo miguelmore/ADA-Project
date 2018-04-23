@@ -444,7 +444,12 @@ public class Search {
         return shortPathGraph;
     }
     
-    
+    /**
+     * Calcula el Arbol de Expansión Mínima por método Kruskal
+     * @param g Grafo
+     * @return MST
+     * @throws Exception 
+     */
     public static UDGraph Kruskal(Graph g) throws Exception{
         UDGraph kruskal = new UDGraph();
         
@@ -502,6 +507,42 @@ public class Search {
         kruskal.setV((List<Node>)groups.get(0));
                 
         return kruskal;
+    }
+    
+    /**
+     * Calcula el Arbol de Expansión Mínima por método Kruskal Inverso
+     * @param g Grafo
+     * @return MST
+     * @throws Exception 
+     */
+    public static UDGraph IKruskal(Graph g) throws Exception{
+        UDGraph iKruskal = new UDGraph();        
+        
+        List<Edge> edges = new ArrayList<>();
+        g.getE().forEach(e -> edges.add(e));
+        
+        // agregamos E y V a iKruskal
+        for (Edge e : g.getE()) {
+            iKruskal.addEdge(e);
+        }
+        iKruskal.setV(g.getV());
+        
+        // Ordenamos las aristas por costo descendente
+        Collections.sort(edges, new EdgeComparator());//ordena ascendente
+        Collections.reverse(edges);
+        
+        // Borramos la arista que no desconecte el grafo
+        int total_nodes = iKruskal.getV().size();
+        for (Edge edge : edges) {
+            iKruskal.getE().remove(edge);
+            Graph dfs = Search.DFS_I(iKruskal,iKruskal.getV().get(0));
+            // si se desconectó, regresamos la arista
+            if(dfs.getV().size() < total_nodes){
+                iKruskal.addEdge(edge);
+            }
+        }
+                
+        return iKruskal;
     }
     
 }
