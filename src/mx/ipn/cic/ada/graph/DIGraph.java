@@ -7,6 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
+import mx.ipn.cic.ada.search.Search;
 
 /**
  *
@@ -106,8 +107,14 @@ public class DIGraph extends Graph {
         StringBuilder sb = new StringBuilder("digraph{\n");
         
         // Nodos
-        for(Node n: this.V){
-            sb.append(n.getId()+";\n");
+        for(Node n: this.V){            
+            // Si es Dijkstra ponemos distancia
+            if(n.getData(Search.DIJK_DIS) != null){
+                sb.append(n.getId()+"("+n.getData(Search.DIJK_DIS)+");\n");
+            }
+            else{
+                sb.append(n.getId()+";\n");
+            }
         }        
         // Aristas
         for(Edge e : this.E){

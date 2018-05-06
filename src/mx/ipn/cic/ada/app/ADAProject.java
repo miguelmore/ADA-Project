@@ -40,13 +40,13 @@ public class ADAProject {
         
         /** Pruebas del Proyecto 3 **/
         //String URL_BASE = "C:\\Users\\SIA Miguel\\Documents\\Segundo\\Diseño y Análisis de Algoritmos\\Proyecto3\\";
-        //String URL_BASE = "/home/komodo/Documents/Cic/Semestre 2/Diseño y Análisis  de Algoritmos/Proyecto 3/archivosGV/";
-        //proyecto3(URL_BASE);
+        String URL_BASE = "/home/komodo/Documents/Cic/Semestre 2/Diseño y Análisis  de Algoritmos/Proyecto 3/archivosGV/";
+        proyecto3(URL_BASE);
         
         /** Pruebas del Proyecto 4 **/
-        String URL_BASE = "C:\\Users\\SIA Miguel\\Documents\\Segundo\\Diseño y Análisis de Algoritmos\\Proyecto4\\";
+        //String URL_BASE = "C:\\Users\\SIA Miguel\\Documents\\Segundo\\Diseño y Análisis de Algoritmos\\Proyecto4\\";
         //String URL_BASE = "/home/komodo/Documents/Cic/Semestre 2/Diseño y Análisis  de Algoritmos/Proyecto 4/archivosGV/";
-        proyecto4(URL_BASE);
+        //proyecto4(URL_BASE);
     }
     
 
@@ -314,19 +314,78 @@ public class ADAProject {
 //            Logger.getLogger(ADAProject.class.getName()).log(Level.SEVERE, null, ex);
 //        }
                         
-        try{
-            System.out.println("\nEjemplo Erdos");
-            DIGraph dig = (DIGraph) Graph.createByErdosRenyi(true, false, 10, 10, true);
-            dig.toGraphviz(URL_BASE + "Digraph.gv");
-            System.out.println(dig);            
-            // Dijkstra
-            DIGraph shortPathGraph = Search.Dijkstra(dig, dig.getNode("1"));
-            shortPathGraph.toGraphviz(URL_BASE + "Dijkstra.gv");
-            System.out.println(shortPathGraph);                
-            
-        } catch (Exception ex) {
-            Logger.getLogger(ADAProject.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
+          try{
+                DIGraph g = null;
+                DIGraph shortPathGraph = null;
+                        
+                // Creamos el grafo aleatorio ERDOS RENYI Pocos Nodos
+                System.out.println("Creando Erdos Pocos Nodos...");
+                g = (DIGraph) Graph.createByErdosRenyi(true, false, 10, 20, true);  
+                g.toGraphviz(URL_BASE + "ErdosRenyi1.gv");  
+                
+                shortPathGraph = Search.Dijkstra(g, g.getNode("1"));
+                shortPathGraph.toGraphviz(URL_BASE + "ErdosRenyi1-Dijkstra.gv");  
+
+                // Creamos el grafo aleatorio ERDOS RENYI Muchos Nodos
+                System.out.println("Creando Erdos Muchos Nodos...");
+                g = (DIGraph) Graph.createByErdosRenyi(true, false, 500, 1000, true);  
+                g.toGraphviz(URL_BASE + "ErdosRenyi2.gv");  
+
+                shortPathGraph = Search.Dijkstra(g, g.getNode("1"));   
+                shortPathGraph.toGraphviz(URL_BASE + "ErdosRenyi2-Dijkstra.gv");  
+
+                // Creamos el grafo aleatorio GILBERT Pocos Nodos
+                System.out.println("Creando Gilbert Pocos Nodos...");
+                g = (DIGraph) Graph.createByGilbert(true, false, 10, 0.5f, true);  
+                g.toGraphviz(URL_BASE + "Gilbert1.gv");  
+
+                shortPathGraph = Search.Dijkstra(g, g.getNode("1"));  
+                shortPathGraph.toGraphviz(URL_BASE + "Gilbert1-Dijkstra.gv");
+
+                // Creamos el grafo aleatorio GILBERT muchos Nodos
+                System.out.println("Creando Gilbert Muchos Nodos...");
+                g = (DIGraph) Graph.createByGilbert(true, false, 500, 0.5f, true);  
+                g.toGraphviz(URL_BASE + "Gilbert2.gv");  
+
+                shortPathGraph = Search.Dijkstra(g, g.getNode("1"));  
+                shortPathGraph.toGraphviz(URL_BASE + "Gilbert2-Dijkstra.gv");
+
+                // Creamos el grafo aleatorio GEOGRAPHIC pocos nodos
+                System.out.println("Creando Geographic Pocos Nodos...");
+                g = (DIGraph) Graph.createByGeographic(true, false, 10, 0.2f, true);
+                g.toGraphviz(URL_BASE + "Geographic1.gv");  
+
+                shortPathGraph = Search.Dijkstra(g, g.getNode("1"));
+                shortPathGraph.toGraphviz(URL_BASE + "Geographic1-Dijkstra.gv");
+
+                // Creamos el grafo aleatorio GEOGRAPHIC muchos nodos
+                System.out.println("Creando Geographic Muchos Nodos...");
+                g = (DIGraph) Graph.createByGeographic(true, false, 500, 0.2f, true);
+                g.toGraphviz(URL_BASE + "Geographic2.gv");  
+
+                shortPathGraph = Search.Dijkstra(g, g.getNode("1"));   
+                shortPathGraph.toGraphviz(URL_BASE + "Geographic2-Dijkstra.gv");
+
+                // Creamos el grafo aleatorio BARABASI pocos nodos
+                System.out.println("Creando Barabasi Albert Pocos Nodos...");
+                g = (DIGraph) Graph.createByBarabasiAlbert(true, 10, 4, true);
+                g.toGraphviz(URL_BASE + "BarabasiAlbert1.gv");  
+
+                shortPathGraph = Search.Dijkstra(g, g.getNode("1"));      
+                shortPathGraph.toGraphviz(URL_BASE + "BarabasiAlbert1-Dijkstra.gv");
+
+                // Creamos el grafo aleatorio BARABASI muchos nodos
+                System.out.println("Creando Barabasi Albert Muchos Nodos...");
+                g = (DIGraph) Graph.createByBarabasiAlbert(true, 500, 50, true);
+                g.toGraphviz(URL_BASE + "BarabasiAlbert2.gv");  
+
+                shortPathGraph = Search.Dijkstra(g, g.getNode("1"));
+                shortPathGraph.toGraphviz(URL_BASE + "BarabasiAlbert2-Dijkstra.gv");
+          }
+          catch(Exception ex){
+              Logger.getLogger(ADAProject.class.getName()).log(Level.SEVERE, null, ex);
+          }
     }
     
     public static void proyecto4(final String URL_BASE){

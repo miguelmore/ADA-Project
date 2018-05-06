@@ -19,7 +19,7 @@ import mx.ipn.cic.ada.graph.UDGraph;
  */
 public class Search {      
     
-    private static final String DIJK_DIS = "DIJKSTRA_DISTANCE";
+    public static final String DIJK_DIS = "DIJKSTRA_DISTANCE";
     private static final String DIJK_PRE_EDG = "DIJKSTRA_PREVIOUS_EDGE";
     private static final Double INFINITE = new Double(Double.POSITIVE_INFINITY);   
     
