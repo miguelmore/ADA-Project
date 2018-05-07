@@ -467,6 +467,7 @@ public class Search {
             groups.add(group);
         });       
         
+        int totalWeight = 0;
                 
         // Por cada arista, validamos si puede agregarse
         for(Edge e : edges){
@@ -497,6 +498,7 @@ public class Search {
                 groups.remove(groupN2);
                 groupN2 = null;
                 kruskal.getE().add(e);
+                totalWeight += (int)e.getObject(Edge.COST);
             }
            
         }
@@ -505,6 +507,8 @@ public class Search {
             throw new Exception("Algo salió mal :(");
         
         kruskal.setV((List<Node>)groups.get(0));
+        
+        System.out.println("Peso del MST: "+totalWeight);
                 
         return kruskal;
     }
@@ -531,6 +535,8 @@ public class Search {
         Collections.sort(edges, new EdgeComparator());//ordena ascendente
         Collections.reverse(edges);
         
+        
+        
         // Borramos la arista que no desconecte el grafo
         int total_nodes = iKruskal.getV().size();
         for (Edge edge : edges) {
@@ -541,8 +547,107 @@ public class Search {
                 iKruskal.addEdge(edge);
             }
         }
+        
+        int totalWeight = 0;
+        for(Edge e : iKruskal.getE()){
+            totalWeight += (int)e.getObject(Edge.COST);
+        }
+        System.out.println("Peso del MST: "+totalWeight);
                 
         return iKruskal;
     }
     
+    public static UDGraph Prim(DIGraph g) throws Exception{
+                     
+        UDGraph prim = new UDGraph(); 
+        List<Node> explored = new ArrayList<>();
+        List<Node> notExplored = new ArrayList<>();
+        
+        // Agregamos todos los nodos a no explorados
+        g.getV().forEach(node -> notExplored.add(node));
+        
+        // Agregamos distancia infinita 
+        notExplored.forEach(node -> node.addData(DIJK_DIS, INFINITE.intValue()));
+        
+        // Se agrega el nodo fuente como explorado
+        Node source = g.getNode("1");
+        source.replaceData(DIJK_DIS, 0);
+        explored.add(source);
+        prim.addNode(source);
+        
+        int totalWeight = 0;
+        int disconnectCount = -1;
+        int previousSize = explored.size();
+        
+        // Mientras los conjuntos sean diferentes
+        while(!explored.containsAll(notExplored)){
+        
+            // Validacion para detectar si el grafo está desconectado
+            // y evitar ciclo infinito
+            if(explored.size() == previousSize){
+                disconnectCount++;                
+            }
+            previousSize = explored.size();
+            
+            if(disconnectCount>=1)
+                break;
+            
+            // Por cada nodo explorado
+            int count = 0;
+            List<Node> toExplore = new ArrayList<>();
+            for(Node expNode : explored){
+                
+                // Buscamos nodos con arista origen en Explored
+                // Y destino en NotExplored
+                List<Edge> edges = Graph.getEdgesBySource(expNode, g.getE(), true);                
+                                
+                // Filtramos por nodos destino no explorados
+                edges = edges.stream().filter(
+                            e -> !explored.contains(e.getTarget())
+                        ).collect(Collectors.toList());
+                
+                // Recolectamos nodos por explorar
+                // Por cada nodo por explorar, calculamos distancia
+                edges.forEach(e -> {
+                    Node target = e.getTarget(); 
+                    int d = (int)expNode.getData(DIJK_DIS) + (int)e.getObject(Edge.COST);
+                    //System.out.println("Edge: "+e+" d: "+d);
+                    if(d<(int)target.getData(DIJK_DIS)){
+                        target.replaceData(DIJK_DIS, d);  
+                        // Guardamos arista 
+                        target.addData(DIJK_PRE_EDG, e);
+                    }
+                                        
+                    toExplore.add(target);                    
+                });                                
+            }            
+            
+            // Seleccionamos el nodo con la menor distancia
+            // y lo marcamos como explorado
+            int dmin = INFINITE.intValue();
+            Node nodeMin = null;
+            for (Node n : toExplore) {
+                if((int)n.getData(DIJK_DIS)<dmin){
+                    dmin = (int)n.getData(DIJK_DIS);
+                    nodeMin = n;
+                }  
+            }
+
+            // marcar node min
+            if(nodeMin != null){
+                Edge edgeSource = (Edge) nodeMin.getData(DIJK_PRE_EDG);
+                explored.add(nodeMin);
+                System.out.println("De "+edgeSource.getSource()+" hacia "+nodeMin);
+                
+                // Agregamos al mst
+                prim.addNode(nodeMin);
+                prim.addEdge(edgeSource);
+                totalWeight += (int)edgeSource.getObject(Edge.COST);
+            }                     
+        }        
+        
+        System.out.println("Peso del MST: "+totalWeight);
+        
+        return prim;
+    }
 }
