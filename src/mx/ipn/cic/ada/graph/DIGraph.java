@@ -118,9 +118,21 @@ public class DIGraph extends Graph {
         }        
         // Aristas
         for(Edge e : this.E){
-            sb.append(e.getSource().getId());
-            sb.append(" -> ");
-            sb.append(e.getTarget().getId());
+            
+            // Si es Dijkstra ponemos distancia
+            if(e.getSource().getData(Search.DIJK_DIS) != null){
+                sb.append(e.getSource().getId()+"("+e.getSource().getData(Search.DIJK_DIS)+")");
+                sb.append(" -> ");
+                sb.append(e.getTarget().getId()+"("+e.getTarget().getData(Search.DIJK_DIS)+")");
+            }
+            else{
+                sb.append(e.getSource().getId());
+                sb.append(" -> ");
+                sb.append(e.getTarget().getId());
+            }
+            
+            
+            
             
             // si tiene costo
             if(e.getObject(Edge.COST) != null){
