@@ -456,156 +456,91 @@ public class ADAProject {
         /* PROYECTO 4 */                            
         try{
             System.out.println("\nEjemplo revisado en Clase");
-            DIGraph dig = null;             
+            UDGraph gra = null;             
             Edge e = null;
-
-            // Ejemplo revisado en Clase de Dijkstra
-//            dig = new DIGraph();
-//            for (int i = 1; i <= 8; i++) {
-//                dig.addNode(new Node(String.valueOf(i)));
-//            }
-//            
-//            e = new Edge(dig.getNode("1"), dig.getNode("2"));
-//            e.addObject(Edge.COST, 9);
-//            dig.addEdge(e);
-//            
-//            e = new Edge(dig.getNode("1"), dig.getNode("6"));
-//            e.addObject(Edge.COST, 14);
-//            dig.addEdge(e);
-//            
-//            e = new Edge(dig.getNode("1"), dig.getNode("7"));
-//            e.addObject(Edge.COST, 15);
-//            dig.addEdge(e);
-//            
-//            e = new Edge(dig.getNode("2"), dig.getNode("3"));
-//            e.addObject(Edge.COST, 24);
-//            dig.addEdge(e);
-//            
-//            e = new Edge(dig.getNode("6"), dig.getNode("3"));
-//            e.addObject(Edge.COST, 18);
-//            dig.addEdge(e);
-//            
-//            e = new Edge(dig.getNode("6"), dig.getNode("5"));
-//            e.addObject(Edge.COST, 30);
-//            dig.addEdge(e);
-//            
-//            e = new Edge(dig.getNode("6"), dig.getNode("7"));
-//            e.addObject(Edge.COST, 5);
-//            dig.addEdge(e);
-//            
-//            e = new Edge(dig.getNode("7"), dig.getNode("5"));
-//            e.addObject(Edge.COST, 20);
-//            dig.addEdge(e);
-//            
-//            e = new Edge(dig.getNode("7"), dig.getNode("8"));
-//            e.addObject(Edge.COST, 44);
-//            dig.addEdge(e);            
-//                       
-//            e = new Edge(dig.getNode("5"), dig.getNode("4"));
-//            e.addObject(Edge.COST, 11);
-//            dig.addEdge(e);
-//            
-//            e = new Edge(dig.getNode("5"), dig.getNode("8"));
-//            e.addObject(Edge.COST, 16);
-//            dig.addEdge(e);
-//            
-//            e = new Edge(dig.getNode("4"), dig.getNode("3"));
-//            e.addObject(Edge.COST, 6);
-//            dig.addEdge(e);
-//            
-//            e = new Edge(dig.getNode("4"), dig.getNode("8"));
-//            e.addObject(Edge.COST, 6);
-//            dig.addEdge(e);
-//            
-//            e = new Edge(dig.getNode("3"), dig.getNode("5"));
-//            e.addObject(Edge.COST, 2);
-//            dig.addEdge(e);
-//            
-//            e = new Edge(dig.getNode("3"), dig.getNode("8"));
-//            e.addObject(Edge.COST, 19);
-//            dig.addEdge(e);
-            
             
             // Ejemplo revisado en Clase de arbol de expansion minima
-            dig = new DIGraph();
+            gra = new UDGraph();
             for (int i = 1; i <= 8; i++) {
-                dig.addNode(new Node(String.valueOf(i)));
+                gra.addNode(new Node(String.valueOf(i)));
             }
             
-            e = new Edge(dig.getNode("1"), dig.getNode("2"));
+            e = new Edge(gra.getNode("1"), gra.getNode("2"));
             e.addObject(Edge.COST, 4);
-            dig.addEdge(e);
+            gra.addEdge(e);
             
-            e = new Edge(dig.getNode("1"), dig.getNode("3"));
+            e = new Edge(gra.getNode("1"), gra.getNode("3"));
             e.addObject(Edge.COST, 6);
-            dig.addEdge(e);
+            gra.addEdge(e);
             
-            e = new Edge(dig.getNode("1"), dig.getNode("4"));
+            e = new Edge(gra.getNode("1"), gra.getNode("4"));
             e.addObject(Edge.COST, 16);
-            dig.addEdge(e);
+            gra.addEdge(e);
             
-            e = new Edge(dig.getNode("2"), dig.getNode("6"));
+            e = new Edge(gra.getNode("2"), gra.getNode("6"));
             e.addObject(Edge.COST, 24);
-            dig.addEdge(e);
+            gra.addEdge(e);
             
-            e = new Edge(dig.getNode("3"), dig.getNode("6"));
+            e = new Edge(gra.getNode("3"), gra.getNode("6"));
             e.addObject(Edge.COST, 23);
-            dig.addEdge(e);
+            gra.addEdge(e);
             
-            e = new Edge(dig.getNode("3"), dig.getNode("5"));
+            e = new Edge(gra.getNode("3"), gra.getNode("5"));
             e.addObject(Edge.COST, 5);
-            dig.addEdge(e);
+            gra.addEdge(e);
             
-            e = new Edge(dig.getNode("3"), dig.getNode("4"));
+            e = new Edge(gra.getNode("3"), gra.getNode("4"));
             e.addObject(Edge.COST, 8);
-            dig.addEdge(e);
+            gra.addEdge(e);
             
-            e = new Edge(dig.getNode("4"), dig.getNode("5"));
+            e = new Edge(gra.getNode("4"), gra.getNode("5"));
             e.addObject(Edge.COST, 10);
-            dig.addEdge(e);
+            gra.addEdge(e);
             
-            e = new Edge(dig.getNode("4"), dig.getNode("8"));
+            e = new Edge(gra.getNode("4"), gra.getNode("8"));
             e.addObject(Edge.COST, 21);
-            dig.addEdge(e);
+            gra.addEdge(e);
             
-            e = new Edge(dig.getNode("5"), dig.getNode("6"));
+            e = new Edge(gra.getNode("5"), gra.getNode("6"));
             e.addObject(Edge.COST, 18);
-            dig.addEdge(e);
+            gra.addEdge(e);
             
-            e = new Edge(dig.getNode("5"), dig.getNode("7"));
+            e = new Edge(gra.getNode("5"), gra.getNode("7"));
             e.addObject(Edge.COST, 11);
-            dig.addEdge(e);
+            gra.addEdge(e);
             
-            e = new Edge(dig.getNode("5"), dig.getNode("8"));
+            e = new Edge(gra.getNode("5"), gra.getNode("8"));
             e.addObject(Edge.COST, 14);
-            dig.addEdge(e);
+            gra.addEdge(e);
             
-            e = new Edge(dig.getNode("6"), dig.getNode("7"));
+            e = new Edge(gra.getNode("7"), gra.getNode("6"));
             e.addObject(Edge.COST, 9);
-            dig.addEdge(e);
+            gra.addEdge(e);
             
-            e = new Edge(dig.getNode("7"), dig.getNode("8"));
+            e = new Edge(gra.getNode("7"), gra.getNode("8"));
             e.addObject(Edge.COST, 7);
-            dig.addEdge(e);
+            gra.addEdge(e);
                                    
-            dig.toGraphviz(URL_BASE + "Test.gv");     
-            System.out.println(dig);            
+            gra.toGraphviz(URL_BASE + "Test.gv");     
+            System.out.println(gra);      
+            
+            gra = (UDGraph)Graph.createByErdosRenyi(false, false, 10, 45, true); 
                 
             // Kruskal              
-            System.out.println("Kruskal");
-            UDGraph kruskal = Search.Kruskal(dig);
+            System.out.println("\nKruskal");
+            UDGraph kruskal = Search.Kruskal(gra);
             kruskal.toGraphviz(URL_BASE + "Kruskal.gv");
             System.out.println(kruskal);
             
             // Kruskal Inverso             
-            System.out.println("Kruskal Inverso");
-            UDGraph iKruskal = Search.IKruskal(dig);
+            System.out.println("\nKruskal Inverso");
+            UDGraph iKruskal = Search.IKruskal(gra);
             iKruskal.toGraphviz(URL_BASE + "IKruskal.gv");
             System.out.println(iKruskal);       
             
             // Prim            
-            System.out.println("Prim");
-            UDGraph prim = Search.Prim(dig);
+            System.out.println("\nPrim");
+            UDGraph prim = Search.Prim(gra);
             prim.toGraphviz(URL_BASE + "Prim.gv");
             System.out.println(prim);   
              

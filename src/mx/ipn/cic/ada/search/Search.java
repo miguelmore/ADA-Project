@@ -21,6 +21,8 @@ public class Search {
     
     public static final String DIJK_DIS = "DIJKSTRA_DISTANCE";
     private static final String DIJK_PRE_EDG = "DIJKSTRA_PREVIOUS_EDGE";
+    private static final String PRIM_DIS = "PRIM_DISTANCE";
+    private static final String PRIM_PRE_EDG = "PRIM_PREVIOUS_EDGE";
     private static final Double INFINITE = new Double(Double.POSITIVE_INFINITY);   
     
     /**
@@ -557,9 +559,9 @@ public class Search {
         return iKruskal;
     }
     
-    public static UDGraph Prim(DIGraph g) throws Exception{
-                     
-        UDGraph prim = new UDGraph(); 
+    public static UDGraph Prim(Graph g) throws Exception{
+        
+        UDGraph primGraph = new UDGraph();        
         List<Node> explored = new ArrayList<>();
         List<Node> notExplored = new ArrayList<>();
         
@@ -567,87 +569,75 @@ public class Search {
         g.getV().forEach(node -> notExplored.add(node));
         
         // Agregamos distancia infinita 
-        notExplored.forEach(node -> node.addData(DIJK_DIS, INFINITE.intValue()));
+        notExplored.forEach(node -> node.addData(PRIM_DIS, INFINITE.intValue()));
         
-        // Se agrega el nodo fuente como explorado
+        // Se establece nodo fuente 
         Node source = g.getNode("1");
-        source.replaceData(DIJK_DIS, 0);
-        explored.add(source);
-        prim.addNode(source);
+        source.replaceData(PRIM_DIS, 0); // para que sea el primero en ser procesado
+        source.addData(PRIM_PRE_EDG, null);
         
-        int totalWeight = 0;
         int disconnectCount = -1;
-        int previousSize = explored.size();
+        int previousSize = -1;
+        int totalWeight = 0;
         
         // Mientras los conjuntos sean diferentes
-        while(!explored.containsAll(notExplored)){
+        while(!explored.containsAll(g.getV())){
         
             // Validacion para detectar si el grafo está desconectado
             // y evitar ciclo infinito
             if(explored.size() == previousSize){
                 disconnectCount++;                
-            }
+            }           
+            if(disconnectCount>2)
+                break;
             previousSize = explored.size();
             
-            if(disconnectCount>=1)
-                break;
-            
-            // Por cada nodo explorado
-            int count = 0;
-            List<Node> toExplore = new ArrayList<>();
-            for(Node expNode : explored){
-                
-                // Buscamos nodos con arista origen en Explored
-                // Y destino en NotExplored
-                List<Edge> edges = Graph.getEdgesBySource(expNode, g.getE(), true);                
-                                
-                // Filtramos por nodos destino no explorados
-                edges = edges.stream().filter(
-                            e -> !explored.contains(e.getTarget())
-                        ).collect(Collectors.toList());
-                
-                // Recolectamos nodos por explorar
-                // Por cada nodo por explorar, calculamos distancia
-                edges.forEach(e -> {
-                    Node target = e.getTarget(); 
-                    int d = (int)expNode.getData(DIJK_DIS) + (int)e.getObject(Edge.COST);
-                    //System.out.println("Edge: "+e+" d: "+d);
-                    if(d<(int)target.getData(DIJK_DIS)){
-                        target.replaceData(DIJK_DIS, d);  
-                        // Guardamos arista 
-                        target.addData(DIJK_PRE_EDG, e);
-                    }
-                                        
-                    toExplore.add(target);                    
-                });                                
-            }            
-            
-            // Seleccionamos el nodo con la menor distancia
-            // y lo marcamos como explorado
+            // Seleccionamos el nodo con menor costo 
             int dmin = INFINITE.intValue();
             Node nodeMin = null;
-            for (Node n : toExplore) {
-                if((int)n.getData(DIJK_DIS)<dmin){
-                    dmin = (int)n.getData(DIJK_DIS);
+            for (Node n : notExplored) {
+                if((int)n.getData(PRIM_DIS)<dmin){
+                    dmin = (int)n.getData(PRIM_DIS);
                     nodeMin = n;
                 }  
             }
-
-            // marcar node min
-            if(nodeMin != null){
-                Edge edgeSource = (Edge) nodeMin.getData(DIJK_PRE_EDG);
-                explored.add(nodeMin);
-                System.out.println("De "+edgeSource.getSource()+" hacia "+nodeMin);
-                
-                // Agregamos al mst
-                prim.addNode(nodeMin);
-                prim.addEdge(edgeSource);
-                totalWeight += (int)edgeSource.getObject(Edge.COST);
-            }                     
-        }        
+            
+            // agregamos nodo minimo al MST
+            primGraph.addNode(nodeMin);
+            explored.add(nodeMin);            
+            Edge edge = (Edge)nodeMin.getData(PRIM_PRE_EDG);
+            if(edge != null){
+                primGraph.addEdge(edge);   
+                totalWeight += (int)edge.getObject(Edge.COST);
+            }
+            //System.out.println("Se agrega "+nodeMin);
+            
+            // se elimina de los no explorados
+            notExplored.remove(nodeMin);            
+                        
+            // Actualizamos costo de nodos adyacentes al nodo minimo
+            // Buscamos nodos adyacentes
+            List<Edge> edges = Graph.getEdgesBySource(nodeMin, g.getE(), true);
+            
+            // Filtramos por los no explorados
+            edges = edges.stream().filter(
+                    e -> notExplored.contains(e.getTarget())
+                    ).collect(Collectors.toList());                
+               
+            // Por cada nodo adyacente, actualizamos costo de nodo  
+            edges.forEach(e -> {
+                Node target = e.getTarget(); 
+                int cost = (int)e.getObject(Edge.COST);
+                if(cost<(int)target.getData(PRIM_DIS)){
+                    target.replaceData(PRIM_DIS, cost);  
+                    // Guardamos arista 
+                    target.addData(PRIM_PRE_EDG, e);
+                }                  
+            });                     
+        }   
         
         System.out.println("Peso del MST: "+totalWeight);
-        
-        return prim;
+        return primGraph;
     }
+        
 }

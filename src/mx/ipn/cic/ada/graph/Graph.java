@@ -116,6 +116,20 @@ public abstract class Graph {
         return exists;
     }
     
+    public static boolean existsNode(Node n, List<Node> V){
+        boolean exists = true;
+        List result = null;        
+        
+        result = V.stream()
+                 .filter(node -> node.getId().equals(n.getId()))
+                 .collect(Collectors.toList());  
+        
+        if(result.isEmpty())
+            exists = false;            
+                
+        return exists;
+    }
+    
     /**
      * Generacion de grafo por metodo Erdos-Renyi
      * @param isDigraph tipo de grafo
@@ -133,10 +147,7 @@ public abstract class Graph {
         // Validamos los datos de entrada
         validateInput(isDigraph,hasAutocycle,n,m);
         
-        // Validamos Aristas con costo
-        if(hasEdgeCost && !isDigraph)
-            throw new Exception("No pueden existir aristas con costo a un grafo no dirigido");
-        
+                
         // Construimos grafos
         if(isDigraph)
             graph = new DIGraph();
@@ -216,10 +227,7 @@ public abstract class Graph {
         if(p<0 || p>1)
             throw new Exception("El valor de p debe estar entre 0 y 1");
         
-        // Validamos Aristas con costo
-        if(hasEdgeCost && !isDigraph)
-            throw new Exception("No pueden existir aristas con costo a un grafo no dirigido");
-        
+                
         // Construimos grafos
         if(isDigraph)
             graph = new DIGraph();
@@ -284,10 +292,7 @@ public abstract class Graph {
         if(r<=0)
             throw new Exception("La distancia r debe ser mayor a 0");
         
-        // Validamos Aristas con costo
-        if(hasEdgeCost && !isDigraph)
-            throw new Exception("No pueden existir aristas con costo a un grafo no dirigido");
-        
+                
         // Construimos grafos
         if(isDigraph)
             graph = new DIGraph();
@@ -381,10 +386,7 @@ public abstract class Graph {
         if(d<=0)
             throw new Exception("El número de aristas d debe ser mayor a 0");
         
-        // Validamos Aristas con costo
-        if(hasEdgeCost && !isDigraph)
-            throw new Exception("No pueden existir aristas con costo a un grafo no dirigido");
-        
+                
         // Construimos grafo
         if(isDigraph)
             graph = new DIGraph();
