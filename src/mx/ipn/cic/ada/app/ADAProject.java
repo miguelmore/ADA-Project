@@ -231,318 +231,103 @@ public class ADAProject {
     
     public static void proyecto3(final String URL_BASE){
         /* PROYECTO 3 */      
-        try{
-            System.out.println("\nEjemplo Dijkstra revisado en Clase");
-            DIGraph dig = null; 
-            Edge e = null;
-
-            // Ejemplo revisado en Clase Dijkstra
-//            dig = new DIGraph();
-//            for (int i = 1; i <= 8; i++) {
-//                dig.addNode(new Node(String.valueOf(i)));
-//            }
-//            
-//            e = new Edge(dig.getNode("1"), dig.getNode("2"));
-//            e.addObject(Edge.COST, 9);
-//            dig.addEdge(e);
-//            
-//            e = new Edge(dig.getNode("1"), dig.getNode("6"));
-//            e.addObject(Edge.COST, 14);
-//            dig.addEdge(e);
-//            
-//            e = new Edge(dig.getNode("1"), dig.getNode("7"));
-//            e.addObject(Edge.COST, 15);
-//            dig.addEdge(e);
-//            
-//            e = new Edge(dig.getNode("2"), dig.getNode("3"));
-//            e.addObject(Edge.COST, 24);
-//            dig.addEdge(e);
-//            
-//            e = new Edge(dig.getNode("6"), dig.getNode("3"));
-//            e.addObject(Edge.COST, 18);
-//            dig.addEdge(e);
-//            
-//            e = new Edge(dig.getNode("6"), dig.getNode("5"));
-//            e.addObject(Edge.COST, 30);
-//            dig.addEdge(e);
-//            
-//            e = new Edge(dig.getNode("6"), dig.getNode("7"));
-//            e.addObject(Edge.COST, 5);
-//            dig.addEdge(e);
-//            
-//            e = new Edge(dig.getNode("7"), dig.getNode("5"));
-//            e.addObject(Edge.COST, 20);
-//            dig.addEdge(e);
-//            
-//            e = new Edge(dig.getNode("7"), dig.getNode("8"));
-//            e.addObject(Edge.COST, 44);
-//            dig.addEdge(e);
-//            
-//            
-//            e = new Edge(dig.getNode("5"), dig.getNode("4"));
-//            e.addObject(Edge.COST, 11);
-//            dig.addEdge(e);
-//            
-//            e = new Edge(dig.getNode("5"), dig.getNode("8"));
-//            e.addObject(Edge.COST, 16);
-//            dig.addEdge(e);
-//            
-//            e = new Edge(dig.getNode("4"), dig.getNode("3"));
-//            e.addObject(Edge.COST, 6);
-//            dig.addEdge(e);
-//            
-//            e = new Edge(dig.getNode("4"), dig.getNode("8"));
-//            e.addObject(Edge.COST, 6);
-//            dig.addEdge(e);
-//            
-//            e = new Edge(dig.getNode("3"), dig.getNode("5"));
-//            e.addObject(Edge.COST, 2);
-//            dig.addEdge(e);
-//            
-//            e = new Edge(dig.getNode("3"), dig.getNode("8"));
-//            e.addObject(Edge.COST, 19);
-//            dig.addEdge(e);
-            
-            
-            // Ejemplo revisado en Clase de arbol de expansion minima
-            dig = new DIGraph();
-            for (int i = 1; i <= 8; i++) {
-                dig.addNode(new Node(String.valueOf(i)));
-            }
-            
-            e = new Edge(dig.getNode("1"), dig.getNode("2"));
-            e.addObject(Edge.COST, 4);
-            dig.addEdge(e);
-            
-            e = new Edge(dig.getNode("1"), dig.getNode("3"));
-            e.addObject(Edge.COST, 6);
-            dig.addEdge(e);
-            
-            e = new Edge(dig.getNode("1"), dig.getNode("4"));
-            e.addObject(Edge.COST, 16);
-            dig.addEdge(e);
-            
-            e = new Edge(dig.getNode("2"), dig.getNode("6"));
-            e.addObject(Edge.COST, 24);
-            dig.addEdge(e);
-            
-            e = new Edge(dig.getNode("3"), dig.getNode("6"));
-            e.addObject(Edge.COST, 23);
-            dig.addEdge(e);
-            
-            e = new Edge(dig.getNode("3"), dig.getNode("5"));
-            e.addObject(Edge.COST, 5);
-            dig.addEdge(e);
-            
-            e = new Edge(dig.getNode("3"), dig.getNode("4"));
-            e.addObject(Edge.COST, 8);
-            dig.addEdge(e);
-            
-            e = new Edge(dig.getNode("4"), dig.getNode("5"));
-            e.addObject(Edge.COST, 10);
-            dig.addEdge(e);
-            
-            e = new Edge(dig.getNode("4"), dig.getNode("8"));
-            e.addObject(Edge.COST, 21);
-            dig.addEdge(e);
-            
-            e = new Edge(dig.getNode("5"), dig.getNode("6"));
-            e.addObject(Edge.COST, 18);
-            dig.addEdge(e);
-            
-            e = new Edge(dig.getNode("5"), dig.getNode("7"));
-            e.addObject(Edge.COST, 11);
-            dig.addEdge(e);
-            
-            e = new Edge(dig.getNode("5"), dig.getNode("8"));
-            e.addObject(Edge.COST, 14);
-            dig.addEdge(e);
-            
-            e = new Edge(dig.getNode("6"), dig.getNode("7"));
-            e.addObject(Edge.COST, 9);
-            dig.addEdge(e);
-            
-            e = new Edge(dig.getNode("7"), dig.getNode("8"));
-            e.addObject(Edge.COST, 7);
-            dig.addEdge(e);
-                                   
-            dig.toGraphviz(URL_BASE + "Test.gv");     
-            System.out.println(dig); 
-            
-            // Dijkstra
-            DIGraph shortPathGraph = Search.Dijkstra(dig, dig.getNode("1"));
-            shortPathGraph.toGraphviz(URL_BASE + "Dijkstra.gv");     
-            System.out.println(shortPathGraph);                
-            
-        } catch (Exception ex) {
-            Logger.getLogger(ADAProject.class.getName()).log(Level.SEVERE, null, ex);
-        }
+          
+          try{
+                DIGraph g = null;
+                DIGraph shortPathGraph = null;
                         
+                // Creamos el grafo aleatorio ERDOS RENYI Pocos Nodos
+                System.out.println("Creando Erdos Pocos Nodos...");
+                g = (DIGraph) Graph.createByErdosRenyi(true, false, 10, 20, true);  
+                g.toGraphviz(URL_BASE + "ErdosRenyi1.gv");  
+                
+                shortPathGraph = Search.Dijkstra(g, g.getNode("1"));
+                shortPathGraph.toGraphviz(URL_BASE + "ErdosRenyi1-Dijkstra.gv");  
 
-//          try{
-//                DIGraph g = null;
-//                DIGraph shortPathGraph = null;
-//                        
-//                // Creamos el grafo aleatorio ERDOS RENYI Pocos Nodos
-//                System.out.println("Creando Erdos Pocos Nodos...");
-//                g = (DIGraph) Graph.createByErdosRenyi(true, false, 10, 20, true);  
-//                g.toGraphviz(URL_BASE + "ErdosRenyi1.gv");  
-//                
-//                shortPathGraph = Search.Dijkstra(g, g.getNode("1"));
-//                shortPathGraph.toGraphviz(URL_BASE + "ErdosRenyi1-Dijkstra.gv");  
-//
-//                // Creamos el grafo aleatorio ERDOS RENYI Muchos Nodos
-//                System.out.println("Creando Erdos Muchos Nodos...");
-//                g = (DIGraph) Graph.createByErdosRenyi(true, false, 400, 1200, true);  
-//                g.toGraphviz(URL_BASE + "ErdosRenyi2.gv");  
-//
-//                shortPathGraph = Search.Dijkstra(g, g.getNode("1"));   
-//                shortPathGraph.toGraphviz(URL_BASE + "ErdosRenyi2-Dijkstra.gv");  
-//
-//                // Creamos el grafo aleatorio GILBERT Pocos Nodos
-//                System.out.println("Creando Gilbert Pocos Nodos...");
-//                g = (DIGraph) Graph.createByGilbert(true, false, 10, 0.7f, true);  
-//                g.toGraphviz(URL_BASE + "Gilbert1.gv");  
-//
-//                shortPathGraph = Search.Dijkstra(g, g.getNode("1"));  
-//                shortPathGraph.toGraphviz(URL_BASE + "Gilbert1-Dijkstra.gv");
-//
-//                // Creamos el grafo aleatorio GILBERT muchos Nodos
-//                System.out.println("Creando Gilbert Muchos Nodos...");
-//                g = (DIGraph) Graph.createByGilbert(true, false, 500, 0.7f, true);  
-//                g.toGraphviz(URL_BASE + "Gilbert2.gv");  
-//
-//                shortPathGraph = Search.Dijkstra(g, g.getNode("1"));  
-//                shortPathGraph.toGraphviz(URL_BASE + "Gilbert2-Dijkstra.gv");
-//
-//                // Creamos el grafo aleatorio GEOGRAPHIC pocos nodos
-//                System.out.println("Creando Geographic Pocos Nodos...");
-//                g = (DIGraph) Graph.createByGeographic(true, false, 10, 0.4f, true);
-//                g.toGraphviz(URL_BASE + "Geographic1.gv");  
-//
-//                shortPathGraph = Search.Dijkstra(g, g.getNode("1"));
-//                shortPathGraph.toGraphviz(URL_BASE + "Geographic1-Dijkstra.gv");
-//
-//                // Creamos el grafo aleatorio GEOGRAPHIC muchos nodos
-//                System.out.println("Creando Geographic Muchos Nodos...");
-//                g = (DIGraph) Graph.createByGeographic(true, false, 500, 0.4f, true);
-//                g.toGraphviz(URL_BASE + "Geographic2.gv");  
-//
-//                shortPathGraph = Search.Dijkstra(g, g.getNode("1"));   
-//                shortPathGraph.toGraphviz(URL_BASE + "Geographic2-Dijkstra.gv");
-//
-//                // Creamos el grafo aleatorio BARABASI pocos nodos
-//                System.out.println("Creando Barabasi Albert Pocos Nodos...");
-//                g = (DIGraph) Graph.createByBarabasiAlbert(true, 10, 4, true);
-//                g.toGraphviz(URL_BASE + "BarabasiAlbert1.gv");  
-//
-//                shortPathGraph = Search.Dijkstra(g, g.getNode("10"));      
-//                shortPathGraph.toGraphviz(URL_BASE + "BarabasiAlbert1-Dijkstra.gv");
-//
-//                // Creamos el grafo aleatorio BARABASI muchos nodos
-//                System.out.println("Creando Barabasi Albert Muchos Nodos...");
-//                g = (DIGraph) Graph.createByBarabasiAlbert(true, 500, 300, true);
-//                g.toGraphviz(URL_BASE + "BarabasiAlbert2.gv");  
-//
-//                shortPathGraph = Search.Dijkstra(g, g.getNode("500"));
-//                shortPathGraph.toGraphviz(URL_BASE + "BarabasiAlbert2-Dijkstra.gv");
-//          }
-//          catch(Exception ex){
-//              Logger.getLogger(ADAProject.class.getName()).log(Level.SEVERE, null, ex);
-//          }
+                // Creamos el grafo aleatorio ERDOS RENYI Muchos Nodos
+                System.out.println("Creando Erdos Muchos Nodos...");
+                g = (DIGraph) Graph.createByErdosRenyi(true, false, 400, 1200, true);  
+                g.toGraphviz(URL_BASE + "ErdosRenyi2.gv");  
+
+                shortPathGraph = Search.Dijkstra(g, g.getNode("1"));   
+                shortPathGraph.toGraphviz(URL_BASE + "ErdosRenyi2-Dijkstra.gv");  
+
+                // Creamos el grafo aleatorio GILBERT Pocos Nodos
+                System.out.println("Creando Gilbert Pocos Nodos...");
+                g = (DIGraph) Graph.createByGilbert(true, false, 10, 0.7f, true);  
+                g.toGraphviz(URL_BASE + "Gilbert1.gv");  
+
+                shortPathGraph = Search.Dijkstra(g, g.getNode("1"));  
+                shortPathGraph.toGraphviz(URL_BASE + "Gilbert1-Dijkstra.gv");
+
+                // Creamos el grafo aleatorio GILBERT muchos Nodos
+                System.out.println("Creando Gilbert Muchos Nodos...");
+                g = (DIGraph) Graph.createByGilbert(true, false, 500, 0.7f, true);  
+                g.toGraphviz(URL_BASE + "Gilbert2.gv");  
+
+                shortPathGraph = Search.Dijkstra(g, g.getNode("1"));  
+                shortPathGraph.toGraphviz(URL_BASE + "Gilbert2-Dijkstra.gv");
+
+                // Creamos el grafo aleatorio GEOGRAPHIC pocos nodos
+                System.out.println("Creando Geographic Pocos Nodos...");
+                g = (DIGraph) Graph.createByGeographic(true, false, 10, 0.4f, true);
+                g.toGraphviz(URL_BASE + "Geographic1.gv");  
+
+                shortPathGraph = Search.Dijkstra(g, g.getNode("1"));
+                shortPathGraph.toGraphviz(URL_BASE + "Geographic1-Dijkstra.gv");
+
+                // Creamos el grafo aleatorio GEOGRAPHIC muchos nodos
+                System.out.println("Creando Geographic Muchos Nodos...");
+                g = (DIGraph) Graph.createByGeographic(true, false, 500, 0.4f, true);
+                g.toGraphviz(URL_BASE + "Geographic2.gv");  
+
+                shortPathGraph = Search.Dijkstra(g, g.getNode("1"));   
+                shortPathGraph.toGraphviz(URL_BASE + "Geographic2-Dijkstra.gv");
+
+                // Creamos el grafo aleatorio BARABASI pocos nodos
+                System.out.println("Creando Barabasi Albert Pocos Nodos...");
+                g = (DIGraph) Graph.createByBarabasiAlbert(true, 10, 4, true);
+                g.toGraphviz(URL_BASE + "BarabasiAlbert1.gv");  
+
+                shortPathGraph = Search.Dijkstra(g, g.getNode("10"));      
+                shortPathGraph.toGraphviz(URL_BASE + "BarabasiAlbert1-Dijkstra.gv");
+
+                // Creamos el grafo aleatorio BARABASI muchos nodos
+                System.out.println("Creando Barabasi Albert Muchos Nodos...");
+                g = (DIGraph) Graph.createByBarabasiAlbert(true, 500, 300, true);
+                g.toGraphviz(URL_BASE + "BarabasiAlbert2.gv");  
+
+                shortPathGraph = Search.Dijkstra(g, g.getNode("500"));
+                shortPathGraph.toGraphviz(URL_BASE + "BarabasiAlbert2-Dijkstra.gv");
+          }
+          catch(Exception ex){
+              Logger.getLogger(ADAProject.class.getName()).log(Level.SEVERE, null, ex);
+          }
     }
     
     public static void proyecto4(final String URL_BASE){
         /* PROYECTO 4 */                            
-        try{
-            System.out.println("\nEjemplo revisado en Clase");
+        try{            
             UDGraph gra = null;             
-            Edge e = null;
-            
-            // Ejemplo revisado en Clase de arbol de expansion minima
-            gra = new UDGraph();
-            for (int i = 1; i <= 8; i++) {
-                gra.addNode(new Node(String.valueOf(i)));
-            }
-            
-            e = new Edge(gra.getNode("1"), gra.getNode("2"));
-            e.addObject(Edge.COST, 4);
-            gra.addEdge(e);
-            
-            e = new Edge(gra.getNode("1"), gra.getNode("3"));
-            e.addObject(Edge.COST, 6);
-            gra.addEdge(e);
-            
-            e = new Edge(gra.getNode("1"), gra.getNode("4"));
-            e.addObject(Edge.COST, 16);
-            gra.addEdge(e);
-            
-            e = new Edge(gra.getNode("2"), gra.getNode("6"));
-            e.addObject(Edge.COST, 24);
-            gra.addEdge(e);
-            
-            e = new Edge(gra.getNode("3"), gra.getNode("6"));
-            e.addObject(Edge.COST, 23);
-            gra.addEdge(e);
-            
-            e = new Edge(gra.getNode("3"), gra.getNode("5"));
-            e.addObject(Edge.COST, 5);
-            gra.addEdge(e);
-            
-            e = new Edge(gra.getNode("3"), gra.getNode("4"));
-            e.addObject(Edge.COST, 8);
-            gra.addEdge(e);
-            
-            e = new Edge(gra.getNode("4"), gra.getNode("5"));
-            e.addObject(Edge.COST, 10);
-            gra.addEdge(e);
-            
-            e = new Edge(gra.getNode("4"), gra.getNode("8"));
-            e.addObject(Edge.COST, 21);
-            gra.addEdge(e);
-            
-            e = new Edge(gra.getNode("5"), gra.getNode("6"));
-            e.addObject(Edge.COST, 18);
-            gra.addEdge(e);
-            
-            e = new Edge(gra.getNode("5"), gra.getNode("7"));
-            e.addObject(Edge.COST, 11);
-            gra.addEdge(e);
-            
-            e = new Edge(gra.getNode("5"), gra.getNode("8"));
-            e.addObject(Edge.COST, 14);
-            gra.addEdge(e);
-            
-            e = new Edge(gra.getNode("7"), gra.getNode("6"));
-            e.addObject(Edge.COST, 9);
-            gra.addEdge(e);
-            
-            e = new Edge(gra.getNode("7"), gra.getNode("8"));
-            e.addObject(Edge.COST, 7);
-            gra.addEdge(e);
-                                   
-            gra.toGraphviz(URL_BASE + "Test.gv");     
-            System.out.println(gra);      
             
             gra = (UDGraph)Graph.createByErdosRenyi(false, false, 10, 45, true); 
-                
+            System.out.println("\nGenerado");
+            System.out.println(gra);
+            
             // Kruskal              
             System.out.println("\nKruskal");
             UDGraph kruskal = Search.Kruskal(gra);
             kruskal.toGraphviz(URL_BASE + "Kruskal.gv");
-            System.out.println(kruskal);
             
             // Kruskal Inverso             
             System.out.println("\nKruskal Inverso");
             UDGraph iKruskal = Search.IKruskal(gra);
             iKruskal.toGraphviz(URL_BASE + "IKruskal.gv");
-            System.out.println(iKruskal);       
             
             // Prim            
             System.out.println("\nPrim");
             UDGraph prim = Search.Prim(gra);
             prim.toGraphviz(URL_BASE + "Prim.gv");
-            System.out.println(prim);   
              
             
         } catch (Exception ex) {

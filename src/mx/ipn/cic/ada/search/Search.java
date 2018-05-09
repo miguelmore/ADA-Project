@@ -510,7 +510,7 @@ public class Search {
         
         kruskal.setV((List<Node>)groups.get(0));
         
-        System.out.println("Peso del MST: "+totalWeight);
+        System.out.println("Costo total del MST: "+totalWeight);
                 
         return kruskal;
     }
@@ -536,9 +536,7 @@ public class Search {
         // Ordenamos las aristas por costo descendente
         Collections.sort(edges, new EdgeComparator());//ordena ascendente
         Collections.reverse(edges);
-        
-        
-        
+                
         // Borramos la arista que no desconecte el grafo
         int total_nodes = iKruskal.getV().size();
         for (Edge edge : edges) {
@@ -554,12 +552,12 @@ public class Search {
         for(Edge e : iKruskal.getE()){
             totalWeight += (int)e.getObject(Edge.COST);
         }
-        System.out.println("Peso del MST: "+totalWeight);
+        System.out.println("Costo total del MST: "+totalWeight);
                 
         return iKruskal;
     }
     
-    public static UDGraph Prim(Graph g) throws Exception{
+    public static UDGraph Prim(UDGraph g) throws Exception{
         
         UDGraph primGraph = new UDGraph();        
         List<Node> explored = new ArrayList<>();
@@ -610,33 +608,42 @@ public class Search {
                 primGraph.addEdge(edge);   
                 totalWeight += (int)edge.getObject(Edge.COST);
             }
-            //System.out.println("Se agrega "+nodeMin);
             
             // se elimina de los no explorados
             notExplored.remove(nodeMin);            
                         
             // Actualizamos costo de nodos adyacentes al nodo minimo
             // Buscamos nodos adyacentes
-            List<Edge> edges = Graph.getEdgesBySource(nodeMin, g.getE(), true);
+            List<Edge> edges = Graph.getEdgesBySource(nodeMin, g.getE(), false);
+
             
             // Filtramos por los no explorados
             edges = edges.stream().filter(
-                    e -> notExplored.contains(e.getTarget())
+                    e -> notExplored.contains(e.getSource()) || notExplored.contains(e.getTarget())
                     ).collect(Collectors.toList());                
                
             // Por cada nodo adyacente, actualizamos costo de nodo  
             edges.forEach(e -> {
-                Node target = e.getTarget(); 
+                Node target = null;                
+                // Depende cual nodo es el que no ha sido agregado a MST
+                if(notExplored.contains(e.getSource())){
+                    target = e.getSource();
+                }
+                else{
+                    target = e.getTarget();
+                }                
+                
                 int cost = (int)e.getObject(Edge.COST);
                 if(cost<(int)target.getData(PRIM_DIS)){
                     target.replaceData(PRIM_DIS, cost);  
                     // Guardamos arista 
                     target.addData(PRIM_PRE_EDG, e);
-                }                  
+                } 
+                                
             });                     
         }   
         
-        System.out.println("Peso del MST: "+totalWeight);
+        System.out.println("Costo total del MST: "+totalWeight);
         return primGraph;
     }
         
