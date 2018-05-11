@@ -505,12 +505,12 @@ public class Search {
            
         }
         
-        if(groups.size() > 1)
-            throw new Exception("Algo salió mal :(");
+        //if(groups.size() > 1)
+            //throw new Exception("Algo salió mal :(");
         
         kruskal.setV((List<Node>)groups.get(0));
         
-        System.out.println("Costo total del MST: "+totalWeight);
+        System.out.println("Kruskal  - Costo total del MST: "+totalWeight);
                 
         return kruskal;
     }
@@ -552,7 +552,7 @@ public class Search {
         for(Edge e : iKruskal.getE()){
             totalWeight += (int)e.getObject(Edge.COST);
         }
-        System.out.println("Costo total del MST: "+totalWeight);
+        System.out.println("IKruskal - Costo total del MST: "+totalWeight);
                 
         return iKruskal;
     }
@@ -643,7 +643,7 @@ public class Search {
             });                     
         }   
         
-        System.out.println("Costo total del MST: "+totalWeight);
+        System.out.println("Prim     - Costo total del MST: "+totalWeight);
         return primGraph;
     }
         

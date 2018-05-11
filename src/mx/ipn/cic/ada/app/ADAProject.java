@@ -306,32 +306,145 @@ public class ADAProject {
     }
     
     public static void proyecto4(final String URL_BASE){
-        /* PROYECTO 4 */                            
-        try{            
-            UDGraph gra = null;             
-            
-            gra = (UDGraph)Graph.createByErdosRenyi(false, false, 10, 45, true); 
-            System.out.println("\nGenerado");
-            System.out.println(gra);
-            
-            // Kruskal              
-            System.out.println("\nKruskal");
-            UDGraph kruskal = Search.Kruskal(gra);
-            kruskal.toGraphviz(URL_BASE + "Kruskal.gv");
-            
-            // Kruskal Inverso             
-            System.out.println("\nKruskal Inverso");
-            UDGraph iKruskal = Search.IKruskal(gra);
-            iKruskal.toGraphviz(URL_BASE + "IKruskal.gv");
-            
-            // Prim            
-            System.out.println("\nPrim");
-            UDGraph prim = Search.Prim(gra);
-            prim.toGraphviz(URL_BASE + "Prim.gv");
-             
-            
-        } catch (Exception ex) {
-            Logger.getLogger(ADAProject.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        /* PROYECTO 4 */  
+                
+        try{
+                UDGraph g = null;
+                UDGraph kruskal = null;
+                UDGraph iKruskal = null;
+                UDGraph prim = null;
+                        
+                // Creamos el grafo aleatorio ERDOS RENYI Pocos Nodos
+                System.out.println("\nCreando Erdos Pocos Nodos...");
+                g = (UDGraph) Graph.createByErdosRenyi(false, false, 10, 20, true);  
+                g.toGraphviz(URL_BASE + "ErdosRenyi1.gv");  
+                
+                kruskal = Search.Kruskal(g);
+                kruskal.toGraphviz(URL_BASE + "ErdosRenyi1-Kruskal.gv");  
+                
+                iKruskal = Search.IKruskal(g);
+                iKruskal.toGraphviz(URL_BASE + "ErdosRenyi1-IKruskal.gv");  
+                
+                prim = Search.Prim(g);
+                prim.toGraphviz(URL_BASE + "ErdosRenyi1-Prim.gv");  
+
+
+
+                // Creamos el grafo aleatorio ERDOS RENYI Muchos Nodos
+                System.out.println("\nCreando Erdos Muchos Nodos...");
+                g = (UDGraph) Graph.createByErdosRenyi(false, false, 400, 1200, true);  
+                g.toGraphviz(URL_BASE + "ErdosRenyi2.gv");  
+
+                kruskal = Search.Kruskal(g);
+                kruskal.toGraphviz(URL_BASE + "ErdosRenyi2-Kruskal.gv");  
+                
+                iKruskal = Search.IKruskal(g);
+                iKruskal.toGraphviz(URL_BASE + "ErdosRenyi2-IKruskal.gv");  
+                
+                prim = Search.Prim(g);
+                prim.toGraphviz(URL_BASE + "ErdosRenyi2-Prim.gv");  
+
+
+
+                // Creamos el grafo aleatorio GILBERT Pocos Nodos
+                System.out.println("\nCreando Gilbert Pocos Nodos...");
+                g = (UDGraph) Graph.createByGilbert(false, false, 10, 0.9f, true);
+                g.toGraphviz(URL_BASE + "Gilbert1.gv");  
+
+                kruskal = Search.Kruskal(g);
+                kruskal.toGraphviz(URL_BASE + "Gilbert1-Kruskal.gv");
+                
+                iKruskal = Search.IKruskal(g);
+                iKruskal.toGraphviz(URL_BASE + "Gilbert1-IKruskal.gv");
+                
+                prim = Search.Prim(g);
+                prim.toGraphviz(URL_BASE + "Gilbert1-Prim.gv");
+
+
+
+                // Creamos el grafo aleatorio GILBERT muchos Nodos
+                System.out.println("\nCreando Gilbert Muchos Nodos...");
+                g = (UDGraph) Graph.createByGilbert(false, false, 500, 0.7f, true);  
+                g.toGraphviz(URL_BASE + "Gilbert2.gv");  
+
+                kruskal = Search.Kruskal(g);
+                kruskal.toGraphviz(URL_BASE + "Gilbert2-Kruskal.gv");
+                
+                iKruskal = Search.IKruskal(g);
+                iKruskal.toGraphviz(URL_BASE + "Gilbert2-IKruskal.gv");
+                
+                prim = Search.Prim(g);
+                prim.toGraphviz(URL_BASE + "Gilbert2-Prim.gv");
+
+
+
+                // Creamos el grafo aleatorio GEOGRAPHIC pocos nodos
+                System.out.println("\nCreando Geographic Pocos Nodos...");
+                g = (UDGraph) Graph.createByGeographic(false, false, 10, 0.8f, true);
+                g.toGraphviz(URL_BASE + "Geographic1.gv");  
+
+                kruskal = Search.Kruskal(g);
+                kruskal.toGraphviz(URL_BASE + "Geographic1-Kruskal.gv");
+                
+                iKruskal = Search.IKruskal(g);
+                iKruskal.toGraphviz(URL_BASE + "Geographic1-IKruskal.gv");
+                
+                prim = Search.Prim(g);
+                prim.toGraphviz(URL_BASE + "Geographic1-Prim.gv");
+
+
+
+                // Creamos el grafo aleatorio GEOGRAPHIC muchos nodos
+                System.out.println("\nCreando Geographic Muchos Nodos...");
+                g = (UDGraph) Graph.createByGeographic(false, false, 300, 0.8f, true);
+                g.toGraphviz(URL_BASE + "Geographic2.gv");  
+
+                kruskal = Search.Kruskal(g);
+                kruskal.toGraphviz(URL_BASE + "Geographic2-Kruskal.gv");
+                
+                iKruskal = Search.IKruskal(g);
+                iKruskal.toGraphviz(URL_BASE + "Geographic2-IKruskal.gv");
+                
+                prim = Search.Prim(g);
+                prim.toGraphviz(URL_BASE + "Geographic2-Prim.gv");
+
+
+
+                // Creamos el grafo aleatorio BARABASI pocos nodos
+                System.out.println("\nCreando Barabasi Albert Pocos Nodos...");
+                g = (UDGraph) Graph.createByBarabasiAlbert(false, 10, 9, true);
+                g.toGraphviz(URL_BASE + "BarabasiAlbert1.gv");  
+
+                kruskal = Search.Kruskal(g);
+                kruskal.toGraphviz(URL_BASE + "BarabasiAlbert1-Kruskal.gv");
+                
+                iKruskal = Search.IKruskal(g);
+                iKruskal.toGraphviz(URL_BASE + "BarabasiAlbert1-IKruskal.gv");
+                
+                prim = Search.Prim(g);
+                prim.toGraphviz(URL_BASE + "BarabasiAlbert1-Prim.gv");
+
+
+
+                // Creamos el grafo aleatorio BARABASI muchos nodos
+                System.out.println("\nCreando Barabasi Albert Muchos Nodos...");
+                g = (UDGraph) Graph.createByBarabasiAlbert(false, 100, 100, true);
+                g.toGraphviz(URL_BASE + "BarabasiAlbert2.gv");  
+
+                kruskal = Search.Kruskal(g);
+                kruskal.toGraphviz(URL_BASE + "BarabasiAlbert2-Kruskal.gv");
+                
+                iKruskal = Search.IKruskal(g);
+                iKruskal.toGraphviz(URL_BASE + "BarabasiAlbert2-IKruskal.gv");
+                
+                prim = Search.Prim(g);
+                prim.toGraphviz(URL_BASE + "BarabasiAlbert2-Prim.gv");
+
+
+          }
+          catch(Exception ex){
+              Logger.getLogger(ADAProject.class.getName()).log(Level.SEVERE, null, ex);
+          }        
+        
     }
 }

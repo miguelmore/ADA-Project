@@ -14,13 +14,23 @@ public class EdgeComparator implements Comparator<Edge>{
     public int compare(Edge a, Edge b)
     {
         int res = 0;
-        int costA = (int) a.getObject(Edge.COST);
-        int costB = (int) b.getObject(Edge.COST);
         
-        if(costA > costB)
-            res = 1;
-        else if(costA < costB)
-            res = -1;            
+//        if(b == null)
+//            res = 1;
+//        else if(a == null)
+//            res = -1;
+//        else{
+//                  
+//        }
+
+            int costA = (int) a.getObject(Edge.COST);
+            int costB = (int) b.getObject(Edge.COST);
+
+            if(costA > costB)
+                res = 1;
+            else if(costA < costB)
+                res = -1; 
+             
         
         return res;
     }

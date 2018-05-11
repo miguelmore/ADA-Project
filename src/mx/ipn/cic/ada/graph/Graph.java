@@ -257,7 +257,7 @@ public abstract class Graph {
                     if(!existsEdge(e,graph.getE(),isDigraph)){
                         
                         // Validamos si debe tener un costo
-                        if(isDigraph && hasEdgeCost){
+                        if(hasEdgeCost){
                             int costo = (int) (Math.random() * Edge.MAX_COST) + 1;
                             e.addObject(Edge.COST, costo);
                         }
@@ -338,7 +338,7 @@ public abstract class Graph {
                         Edge e = new Edge(ni, nj);
                         
                         // Validamos si debe tener un costo
-                        if(isDigraph && hasEdgeCost){
+                        if(hasEdgeCost){
                             e.addObject(Edge.COST, 0);
                         }
                         
@@ -355,7 +355,7 @@ public abstract class Graph {
                         if(!existsEdge(e,graph.getE(),isDigraph)){
                             
                             // Validamos si debe tener un costo
-                            if(isDigraph && hasEdgeCost){
+                            if(hasEdgeCost){
                                 int costo = (int) (Math.random() * Edge.MAX_COST) + 1;
                                 e.addObject(Edge.COST, costo);
                             }
@@ -417,7 +417,7 @@ public abstract class Graph {
                        Edge e = new Edge(newNode, vNode);
                        
                        // Validamos si debe tener un costo
-                       if(isDigraph && hasEdgeCost){
+                       if(hasEdgeCost){
                            int costo = (int) (Math.random() * Edge.MAX_COST) + 1;
                            e.addObject(Edge.COST, costo);
                        } 
