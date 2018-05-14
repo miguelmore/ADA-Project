@@ -332,7 +332,7 @@ public class ADAProject {
 
                 // Creamos el grafo aleatorio ERDOS RENYI Muchos Nodos
                 System.out.println("\nCreando Erdos Muchos Nodos...");
-                g = (UDGraph) Graph.createByErdosRenyi(false, false, 400, 1200, true);  
+                g = (UDGraph) Graph.createByErdosRenyi(false, false, 300, 1200, true);  
                 g.toGraphviz(URL_BASE + "ErdosRenyi2.gv");  
 
                 kruskal = Search.Kruskal(g);
@@ -360,22 +360,19 @@ public class ADAProject {
                 prim = Search.Prim(g);
                 prim.toGraphviz(URL_BASE + "Gilbert1-Prim.gv");
 
-
-
                 // Creamos el grafo aleatorio GILBERT muchos Nodos
                 System.out.println("\nCreando Gilbert Muchos Nodos...");
-                g = (UDGraph) Graph.createByGilbert(false, false, 500, 0.7f, true);  
+                g = (UDGraph) Graph.createByGilbert(false, false, 100, 0.5f, true);  
                 g.toGraphviz(URL_BASE + "Gilbert2.gv");  
 
                 kruskal = Search.Kruskal(g);
                 kruskal.toGraphviz(URL_BASE + "Gilbert2-Kruskal.gv");
+
+                prim = Search.Prim(g);
+                prim.toGraphviz(URL_BASE + "Gilbert2-Prim.gv");
                 
                 iKruskal = Search.IKruskal(g);
                 iKruskal.toGraphviz(URL_BASE + "Gilbert2-IKruskal.gv");
-                
-                prim = Search.Prim(g);
-                prim.toGraphviz(URL_BASE + "Gilbert2-Prim.gv");
-
 
 
                 // Creamos el grafo aleatorio GEOGRAPHIC pocos nodos
@@ -396,17 +393,19 @@ public class ADAProject {
 
                 // Creamos el grafo aleatorio GEOGRAPHIC muchos nodos
                 System.out.println("\nCreando Geographic Muchos Nodos...");
-                g = (UDGraph) Graph.createByGeographic(false, false, 300, 0.8f, true);
+                g = (UDGraph) Graph.createByGeographic(false, false, 100, 0.5f, true);
                 g.toGraphviz(URL_BASE + "Geographic2.gv");  
 
                 kruskal = Search.Kruskal(g);
                 kruskal.toGraphviz(URL_BASE + "Geographic2-Kruskal.gv");
                 
+                prim = Search.Prim(g);
+                prim.toGraphviz(URL_BASE + "Geographic2-Prim.gv");
+                
                 iKruskal = Search.IKruskal(g);
                 iKruskal.toGraphviz(URL_BASE + "Geographic2-IKruskal.gv");
                 
-                prim = Search.Prim(g);
-                prim.toGraphviz(URL_BASE + "Geographic2-Prim.gv");
+                
 
 
 
@@ -434,12 +433,11 @@ public class ADAProject {
                 kruskal = Search.Kruskal(g);
                 kruskal.toGraphviz(URL_BASE + "BarabasiAlbert2-Kruskal.gv");
                 
-                iKruskal = Search.IKruskal(g);
-                iKruskal.toGraphviz(URL_BASE + "BarabasiAlbert2-IKruskal.gv");
-                
                 prim = Search.Prim(g);
                 prim.toGraphviz(URL_BASE + "BarabasiAlbert2-Prim.gv");
-
+                
+                iKruskal = Search.IKruskal(g);
+                iKruskal.toGraphviz(URL_BASE + "BarabasiAlbert2-IKruskal.gv");   
 
           }
           catch(Exception ex){
